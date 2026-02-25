@@ -191,6 +191,12 @@ textarea { resize: vertical; min-height: 120px; }
   overflow: hidden;
 }
 
+.about-subtitle {
+  margin: .7rem 0 .45rem;
+  font-size: 1rem;
+  color: var(--primary);
+}
+
 .hero-img img,
 .card-img img,
 .about-img img {

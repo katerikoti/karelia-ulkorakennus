@@ -20,6 +20,15 @@
           <li><a href="yhteydenotto.html">Yhteydenotto</a></li>
         </ul>
       </nav>
+      <div class="hamburger" id="hbg" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="index.html">Etusivu</a>
+      <a href="palvelut.html" class="active">Palvelut</a>
+      <a href="yritys.html">Meistä</a>
+      <a href="yhteydenotto.html">Yhteydenotto</a>
     </div>
   </header>
 
@@ -39,10 +48,9 @@
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; align-items:center;">
           <div>
             <h2>Terassit</h2>
-            <p>Terassi on yksi parhaimmista investoinneista omakotitalon tai mökin viihtyvyyteen. Suunnittelemme ja rakennamme terassin, joka sopii juuri sinun tonttisi muotoihin, talon tyyliin ja käyttötarpeisiin.</p>
-            <p>Terassit toteutetaan kestävillä materiaaleilla, kuten painekyllästetyllä puulla tai komposiitilla, jotka soveltuvat Pohjois-Karjalan vaihteleviin sääolosuhteisiin. Terassi voidaan toteuttaa maatasoon, korotettuna tai monitasoisena ratkaisuna.</p>
-            <p><strong>Sopii erityisesti:</strong> omakotitalot, kesämökit, rivitalot.</p>
-            <a href="yhteydenotto.html" class="btn" style="margin-top:0.5rem;">Pyydä tarjous terassista</a>
+            <p>Terassi on yksi parhaimmista investoinneista omakotitalon tai mökin viihtyvyyteen - se muodostaa jatkeen sisätilasta ulkoilmaan ja luo kesän viettopaikan. Suunnittelemme ja rakennamme terassin, joka sopii juuri sinun tonttiisi, talon tyyliin ja käyttötarpeisiin.</p>
+            <p>Karelia Ulkorakennus rakentaa laadukkaat puuterassit, jotka kestävät Pohjois-Karjalan vuodenaikojen vaatimukset. Terassi voidaan toteuttaa maatasoon, korotettuna tai monitasoisena ratkaisuna omakotitaloihin, kesämökeille ja rivitalokohteisiin.</p>
+            <a href="yhteydenotto.html?aihe=terassi" class="btn" style="margin-top:0.5rem;">Pyydä tarjous terassista</a>
           </div>
           <div class="card-img" style="height:260px; border-radius:6px;">
             <img src="images/terassi.png" alt="Rakennettu terassi Joensuussa Pielisjoen varrella">
@@ -62,10 +70,9 @@
           </div>
           <div>
             <h2>Pergolat</h2>
-            <p>Pergola on tyylikäs ratkaisu, joka tuo terassille tai pihalle tunnelmaa, varjoa ja selkeän rakenteen. Se sopii erinomaisesti myös pitkien kesäiltojen viettoon.</p>
-            <p>Toteutamme pergolat mittatilaustyönä puusta tai yhdistelmämateriaaleista. Pergolan voi varustaa esimerkiksi kasvien kasvualustalla, valaistuksella tai aurinkosuojalla toiveidesi mukaan.</p>
-            <p><strong>Sopii erityisesti:</strong> terassin jatkeeksi, piha-alueille, taloyhtiöiden yhteistiloihin.</p>
-            <a href="yhteydenotto.html" class="btn" style="margin-top:0.5rem;">Pyydä tarjous pergolasta</a>
+            <p>Pergola on tyylikäs ratkaisu, joka tuo terassille tai pihalle tunnelmaa ja varjoa. Se sopii erinomaisesti myös pitkien kesäiltojen viettoon.</p>
+            <p>Toteutamme pergolat mittatilaustyönä puusta tai yhdistelmämateriaaleista. Pergolan voi varustaa esimerkiksi kasvien kasvualustalla, valaistuksella tai aurinkosuojalla toiveidesi mukaan terassin jatkeeksi, piha-alueille ja taloyhtiöiden yhteistiloihin.</p>
+            <a href="yhteydenotto.html?aihe=pergola" class="btn" style="margin-top:0.5rem;">Pyydä tarjous pergolasta</a>
           </div>
         </div>
       </div>
@@ -80,9 +87,8 @@
           <div>
             <h2>Piharakennukset</h2>
             <p>Toimiva piharakennus lisää käytännöllisyyttä ja vapauttaa sisätiloja. Rakennamme varastoja, puuvajoja, vierasmajoja, leikkimökkejä ja muita pieniä ulkorakennuksia.</p>
-            <p>Jokainen piharakennus suunnitellaan asiakkaan tarpeiden ja tontin ehtojen mukaan. Huolehdimme, että rakennus on kestävä, asiallinen ja sopii olemassa olevan ympäristön ilmeeseen.</p>
-            <p><strong>Sopii erityisesti:</strong> omakotitalot, mökit, pienet taloyhtiöt.</p>
-            <a href="yhteydenotto.html" class="btn" style="margin-top:0.5rem;">Kysy lisää piharakennuksista</a>
+            <p>Jokainen piharakennus suunnitellaan asiakkaan tarpeiden ja tontin ehtojen mukaan. Huolehdimme, että rakennus on kestävä, asiallinen ja sopii olemassa olevan ympäristön ilmeeseen omakotitaloissa, mökeillä ja pienissä taloyhtiöissä.</p>
+            <a href="yhteydenotto.html?aihe=piharakennus" class="btn" style="margin-top:0.5rem;">Kysy lisää piharakennuksista</a>
           </div>
           <div class="card-img" style="height:260px; border-radius:6px;">
             <img src="images/vierasmaja.png" alt="Piharakennus ja vierasmaja Mönnin rantamaisemissa">
@@ -103,9 +109,8 @@
           <div>
             <h2>Aidat</h2>
             <p>Selkeä aita rajaa tonttisi, lisää turvallisuutta ja viimeistelee piha-alueen ilmeen. Rakennamme aidat puusta, metallista tai näiden yhdistelmistä.</p>
-            <p>Tarjoamme erilaisia aitavaihtoehtoja tarpeen mukaan – yksinkertaisesta rimaidat edustusaitaan. Aita toteutetaan kestävästi niin, että se kestää Suomen talvet huoletta.</p>
-            <p><strong>Sopii erityisesti:</strong> omakotitalon tontin rajaus, taloyhtiöiden piha-alueet, mökit.</p>
-            <a href="yhteydenotto.html" class="btn" style="margin-top:0.5rem;">Pyydä tarjous aidasta</a>
+            <p>Tarjoamme erilaisia aitavaihtoehtoja tarpeen mukaan – yksinkertaisesta rimaidat edustusaitaan. Aita toteutetaan kestävästi niin, että se kestää Suomen talvet huoletta omakotitalon tontin rajauksessa, taloyhtiöiden piha-alueilla ja mökkikohteissa.</p>
+            <a href="yhteydenotto.html?aihe=aita" class="btn" style="margin-top:0.5rem;">Pyydä tarjous aidasta</a>
           </div>
         </div>
       </div>
@@ -120,9 +125,8 @@
           <div>
             <h2>Piharemontit</h2>
             <p>Onko vanha terassi lahonnut, aita kallellaan tai piharakennus kaipaava kunnostusta? Hoidamme pienet ja keskisuuret piharemontit nopeasti ja siististi.</p>
-            <p>Piharemonttimme kattavat esimerkiksi vanhan terassin purkamisen ja uusimisen, aitojen korjauksen tai piharakennuksen kunnostamisen. Arvioimme tilanteen aina ensin paikan päällä.</p>
-            <p><strong>Sopii erityisesti:</strong> kaikki kiinteistötyypit – pieni tai iso remontti.</p>
-            <a href="yhteydenotto.html" class="btn" style="margin-top:0.5rem;">Kysy piharemonttia</a>
+            <p>Piharemonttimme kattavat esimerkiksi vanhan terassin purkamisen ja uusimisen, aitojen korjauksen tai piharakennuksen kunnostamisen. Arvioimme tilanteen aina ensin paikan päällä, ja toteutamme remontit kaikkiin kiinteistötyyppeihin pienistä korjauksista laajempiin kokonaisuuksiin.</p>
+            <a href="yhteydenotto.html?aihe=piharemontti" class="btn" style="margin-top:0.5rem;">Kysy piharemonttia</a>
           </div>
           <div class="card-img" style="height:260px; border-radius:6px;">
             <img src="images/remontti.png" alt="Mökkiterassin remontti Naarvaan alueella Pohjois-Karjalassa">
@@ -155,6 +159,13 @@
     </div>
     <div class="footer-privacy"><a href="tietosuojaseloste.html">Tietosuojaseloste</a></div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('hbg').classList.toggle('open');
+      document.getElementById('mobile-nav').classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>

@@ -20,6 +20,15 @@
           <li><a href="yhteydenotto.html">Yhteydenotto</a></li>
         </ul>
       </nav>
+      <div class="hamburger" id="hbg" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="index.html">Etusivu</a>
+      <a href="palvelut.html">Palvelut</a>
+      <a href="yritys.html">Meistä</a>
+      <a href="yhteydenotto.html">Yhteydenotto</a>
     </div>
   </header>
 
@@ -109,6 +118,13 @@
     </div>
     <div class="footer-privacy"><a href="tietosuojaseloste.html">Tietosuojaseloste</a></div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('hbg').classList.toggle('open');
+      document.getElementById('mobile-nav').classList.toggle('open');
+    }
+  </script>
 
 </body>
 </html>

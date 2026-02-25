@@ -67,15 +67,7 @@
           <h2 style="margin-bottom:.4rem;">Lähetä viesti tai pyydä tarjous</h2>
           <p style="color:var(--support); margin-bottom:1.5rem; font-size:.95rem;">Täytä lomake, niin otamme sinuun yhteyttä mahdollisimman pian.</p>
 
-          <?php if (!empty($_GET['kiitos'])): ?>
-            <div style="background:#e8f5e9; border:1px solid #a5d6a7; padding:.9rem 1.2rem; border-radius:4px; color:#2e7d32; font-weight:600; margin-bottom:1.5rem;">
-              ✓ Kiitos yhteydenotostasi! Otamme sinuun yhteyttä pian.
-            </div>
-          <?php elseif (!empty($_GET['virhe'])): ?>
-            <div style="background:#fdecea; border:1px solid #f5c6cb; padding:.9rem 1.2rem; border-radius:4px; color:#b71c1c; margin-bottom:1.5rem;">
-              <?php echo htmlspecialchars($_GET['virhe']); ?>
-            </div>
-          <?php endif; ?>
+          <div id="form-status" style="display:none; padding:.9rem 1.2rem; border-radius:4px; margin-bottom:1.5rem;"></div>
 
           <form action="lomake.php" method="POST" novalidate>
             <div class="form-grid">
@@ -89,12 +81,12 @@
               </div>
               <div class="form-group">
                 <label for="puhelin">Puhelinnumero</label>
-                <input type="tel" id="puhelin" name="puhelin" placeholder="050 000 0000" autocomplete="tel">
+                <input type="tel" id="puhelin" name="puhelin" value="+358" autocomplete="tel">
               </div>
               <div class="form-group">
-                <label for="palvelu">Palvelu</label>
+                <label for="palvelu">Aihe</label>
                 <select id="palvelu" name="palvelu">
-                  <option value="">-- Valitse palvelu --</option>
+                  <option value="">Valitse aihe</option>
                   <option value="terassi">Terassi</option>
                   <option value="pergola">Pergola</option>
                   <option value="piharakennus">Piharakennus</option>
@@ -105,11 +97,11 @@
               </div>
               <div class="form-group">
                 <label for="sijainti">Paikkakunta</label>
-                <input type="text" id="sijainti" name="sijainti" placeholder="esim. Joensuu, Kontiolahti...">
+                <input type="text" id="sijainti" name="sijainti" placeholder="esim. Joensuu">
               </div>
               <div class="form-group full">
                 <label for="viesti">Viesti *</label>
-                <textarea id="viesti" name="viesti" required placeholder="Kerro lyhyesti projektistasi tai kysymyksestäsi..."></textarea>
+                <textarea id="viesti" name="viesti" required placeholder="Kerro projektistasi tai kysymyksestäsi..."></textarea>
               </div>
               <div class="full">
                 <p style="font-size:.82rem; color:var(--support); margin-bottom:1rem;">
@@ -144,6 +136,66 @@
       document.getElementById('hbg').classList.toggle('open');
       document.getElementById('mobile-nav').classList.toggle('open');
     }
+
+    function preselectAiheFromUrl() {
+      const allowed = ['terassi', 'pergola', 'piharakennus', 'aita', 'piharemontti', 'muu'];
+      const params = new URLSearchParams(window.location.search);
+      const aihe = params.get('aihe');
+      const select = document.getElementById('palvelu');
+
+      if (!select || !aihe || !allowed.includes(aihe)) return;
+      select.value = aihe;
+    }
+
+    function renderFormStatusFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const statusEl = document.getElementById('form-status');
+      if (!statusEl) return;
+
+      const kiitos = params.get('kiitos');
+      const virhe = params.get('virhe');
+
+      if (kiitos === '1') {
+        statusEl.style.display = 'block';
+        statusEl.style.background = '#e8f5e9';
+        statusEl.style.border = '1px solid #a5d6a7';
+        statusEl.style.color = '#2e7d32';
+        statusEl.style.fontWeight = '600';
+        statusEl.textContent = '✓ Kiitos yhteydenotostasi! Otamme sinuun yhteyttä pian.';
+        return;
+      }
+
+      if (virhe) {
+        statusEl.style.display = 'block';
+        statusEl.style.background = '#fdecea';
+        statusEl.style.border = '1px solid #f5c6cb';
+        statusEl.style.color = '#b71c1c';
+        statusEl.style.fontWeight = '400';
+        statusEl.textContent = virhe;
+      }
+    }
+
+    function setupPhonePrefixCursor() {
+      const phoneInput = document.getElementById('puhelin');
+      if (!phoneInput) return;
+
+      const moveCursorToEnd = function () {
+        if (!phoneInput.value) return;
+        const endPos = phoneInput.value.length;
+        setTimeout(function () {
+          phoneInput.setSelectionRange(endPos, endPos);
+        }, 0);
+      };
+
+      phoneInput.addEventListener('focus', moveCursorToEnd);
+      phoneInput.addEventListener('click', moveCursorToEnd);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      preselectAiheFromUrl();
+      renderFormStatusFromUrl();
+      setupPhonePrefixCursor();
+    });
   </script>
 
 </body>
