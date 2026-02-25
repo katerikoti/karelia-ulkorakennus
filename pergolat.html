@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pergolat – Karelia Ulkorakennus Oy | Joensuu, Pohjois-Karjala</title>
+  <meta name="description" content="Pergola Joensuu ja koko Pohjois-Karjala. Mittatilauspergolat terasseille ja pihoille lisäämään suojaa ja viihtyisyyttä.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
+  <link rel="manifest" href="images/favicon/site.webmanifest">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a class="logo" href="index.html">Karelia <span>Ulkorakennus</span></a>
+      <nav aria-label="Päänavigaatio">
+        <ul>
+          <li><a href="index.html">Etusivu</a></li>
+          <li class="has-submenu"><span class="nav-parent active">Palvelut</span>
+            <div class="submenu">
+              <a href="terassit.html">Terassit</a>
+              <a href="pergolat.html" class="active">Pergolat</a>
+              <a href="piharakennukset.html">Piharakennukset</a>
+              <a href="aidat.html">Aidat</a>
+              <a href="piharemontit.html">Piharemontit</a>
+            </div>
+          </li>
+          <li><a href="yritys.html">Meistä</a></li>
+          <li><a href="yhteydenotto.html">Yhteydenotto</a></li>
+        </ul>
+      </nav>
+      <div class="hamburger" id="hbg" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    </div>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="index.html">Etusivu</a>
+      <a href="#" class="mobile-nav-parent" onclick="event.preventDefault();document.getElementById('mobile-subnav').classList.toggle('open')">Palvelut</a>
+      <div class="mobile-subnav" id="mobile-subnav">
+        <a href="terassit.html" class="sub-link">Terassit</a>
+        <a href="pergolat.html" class="sub-link active">Pergolat</a>
+        <a href="piharakennukset.html" class="sub-link">Piharakennukset</a>
+        <a href="aidat.html" class="sub-link">Aidat</a>
+        <a href="piharemontit.html" class="sub-link">Piharemontit</a>
+      </div>
+      <a href="yritys.html">Meistä</a>
+      <a href="yhteydenotto.html">Yhteydenotto</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding: 3rem 1.5rem;">
+      <div class="container">
+        <h1>Pergolat</h1>
+        <p>Pergola Joensuussa ja koko Pohjois-Karjalassa. Rakennamme mittatilauspergolat terassin jatkeeksi tai pihan erilliseksi oleskelualueeksi.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="service-row">
+          <div>
+            <h2>Pergolapalvelu</h2>
+            <p>Pergola on tyylikäs ratkaisu, joka tuo terassille tai pihalle tunnelmaa ja suojaa. Toteutamme lasitettuja ja avoimia pergolaratkaisuja, jotka sopivat niin rannalla kuin kaupunkipihoissakin Pohjois-Karjalassa.</p>
+            <p>Toteutamme pergolat mittatilaustyönä puusta, kelohirrestä tai komposiitista. Lisävarusteina tarjoamme valaistuksen, kasviratkaisut ja aurinkosuojat — suunnittelemme ratkaisun pihan ilmansuuntien ja käyttötarpeen mukaan.</p>
+          </div>
+          <div class="card-img" style="height:280px; border-radius:6px;">
+            <img src="images/palvelut/pergolat/pergola.webp" alt="Moderni lasitettu pergola Pielisjoen rannassa, Joensuu / Pohjois-Karjala">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: var(--white); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+      <div class="container">
+        <h2 class="section-title">Lisämahdollisuudet</h2>
+        <div class="info-grid">
+          <div class="info-block"><h3>Valaistus</h3><p>Pergolaan integroidut valot iltakäyttöä varten.</p></div>
+          <div class="info-block"><h3>Näkösuoja</h3><p>Säleiköt ja sivuratkaisut lisäävät suojaa.</p></div>
+          <div class="info-block"><h3>Kasviratkaisut</h3><p>Pergola toimii hyvin köynnöksille ja viherseinille.</p></div>
+          <div class="info-block"><h3>Katos</h3><p>Mahdollisuus lisätä suojaa sateelta ja auringolta.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>Kuvagalleria</h2>
+        <div class="gallery-wrap" data-slider>
+          <div class="gallery-slider">
+            <button class="gallery-arrow prev" type="button" aria-label="Edellinen kuva">&#8249;</button>
+            <div class="gallery-track">
+              <figure class="gallery-slide active" data-title="Moderni lasitettu pergola" data-desc="Moderni lasitettu pergola Pielisjoen rannassa; tarjoaa selkeät näkymät jokimaisemaan ja suojaa säältä, Joensuussa.">
+                <div class="gallery-image"><img src="images/palvelut/pergolat/pergola.webp" alt="Moderni lasitettu pergola Pielisjoen rannassa, Joensuu / Pohjois-Karjala"></div>
+              </figure>
+              <figure class="gallery-slide" data-title="Kelohirsi-pergola veistettyine kaiteineen" data-desc="Kelohirrestä valmistettu pergola, viimeistelty tyylikkäällä veistettynä kaiteella; sopii mökkikohteisiin Juuan alueella, Pohjois-Karjalassa.">
+                <div class="gallery-image"><img src="images/palvelut/pergolat/pergola1.webp" alt="Kelohirsi-pergola veistetyllä kaiteella, Juuka, Pohjois-Karjala"></div>
+              </figure>
+              <figure class="gallery-slide" data-title="Pergola tapahtumapaikkana" data-desc="Pergola vuokrattavan juhlapaikan pihapiirissä Pohjois-Karjalassa; tilava ja katettu pergola soveltuu kesähäihin ja muihin tapahtumiin.">
+                <div class="gallery-image"><img src="images/palvelut/pergolat/pergola2.webp" alt="Pergola tapahtumapaikalla, Pohjois-Karjala – sopii kesähäihin ja tapahtumiin"></div>
+              </figure>
+              <figure class="gallery-slide" data-title="Valaistu pergola omakotitalon jatkeena" data-desc="Valaistu pergola pienen omakotitalon jatkeena; tunnelmallinen ratkaisu kesäiltojen viettoon ja ulko-oleskeluun.">
+                <div class="gallery-image"><img src="images/palvelut/pergolat/pergola3.webp" alt="Valaistu pergola omakotitalon jatkeena, Pohjois-Karjala"></div>
+              </figure>
+              <figure class="gallery-slide" data-title="Pyöreä pergola järven rannalla" data-desc="Pyöreä pergola järven rannalla asiakkaan kohteessa Outokummussa; istutusratkaisuilla lisäsuojaa ja luonnonläheinen oleskelualue, suojaa auringolta ja luo tunnelmaa.">
+                <div class="gallery-image"><img src="images/palvelut/pergolat/pergola4.webp" alt="Pyöreä pergola järven rannalla, istutusratkaisuilla aurinkosuojaksi"></div>
+              </figure>
+            </div>
+            <button class="gallery-arrow next" type="button" aria-label="Seuraava kuva">&#8250;</button>
+          </div>
+          <div class="gallery-info">
+            <h3>Moderni lasitettu pergola – Pielisjoen ranta</h3>
+            <p>Moderni lasitettu pergola Pielisjoen rannassa; tarjoaa suojan ja näkymän jokimaisemaan, Joensuu / Pohjois-Karjala.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="strip">
+      <div class="container">
+        <h2>Pyydä tarjous pergolasta</h2>
+        <p>Suunnitellaan pihallesi sopiva pergola ja selkeä toteutus.</p>
+        <a href="yhteydenotto.html?aihe=pergola" class="btn">Ota yhteyttä</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Karelia <span>Ulkorakennus</span> Oy</div>
+        <p style="margin-top:.4rem;">Joensuu, Pohjois-Karjala</p>
+        <p><a href="mailto:info@kareliarakennus.fi">info@kareliarakennus.fi</a> · <a href="tel:+358501234567">050 123 4567</a></p>
+      </div>
+    </div>
+    <div class="footer-copy">&copy; 2026 Karelia Ulkorakennus Oy. Kaikki oikeudet pidätetään.</div>
+    <div class="footer-privacy"><a href="tietosuoja.html">Tietosuojaseloste</a></div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('hbg').classList.toggle('open');
+      document.getElementById('mobile-nav').classList.toggle('open');
+    }
+
+    function initGallerySliders() {
+      document.querySelectorAll('[data-slider]').forEach(function (sliderRoot) {
+        const slides = sliderRoot.querySelectorAll('.gallery-slide');
+        const prev = sliderRoot.querySelector('.gallery-arrow.prev');
+        const next = sliderRoot.querySelector('.gallery-arrow.next');
+        const track = sliderRoot.querySelector('.gallery-track');
+        const infoTitle = sliderRoot.querySelector('.gallery-info h3');
+        const infoText = sliderRoot.querySelector('.gallery-info p');
+
+        if (!slides.length || !prev || !next || !track || !infoTitle || !infoText) return;
+
+        let current = 0;
+        let startX = 0;
+        let isDown = false;
+        const threshold = 50;
+
+        const render = function () {
+          slides.forEach(function (slide, idx) {
+            slide.classList.toggle('active', idx === current);
+          });
+          infoTitle.textContent = slides[current].dataset.title || '';
+          infoText.textContent = slides[current].dataset.desc || '';
+        };
+
+        const prevSlide = function () {
+          current = (current - 1 + slides.length) % slides.length;
+          render();
+        };
+
+        const nextSlide = function () {
+          current = (current + 1) % slides.length;
+          render();
+        };
+
+        prev.addEventListener('click', prevSlide);
+        next.addEventListener('click', nextSlide);
+
+        track.addEventListener('dragstart', function (e) {
+          e.preventDefault();
+        });
+
+        track.addEventListener('mousedown', function (e) {
+          isDown = true;
+          startX = e.clientX;
+          track.classList.add('dragging');
+        });
+
+        window.addEventListener('mouseup', function (e) {
+          if (!isDown) return;
+          const delta = e.clientX - startX;
+          isDown = false;
+          track.classList.remove('dragging');
+          if (Math.abs(delta) >= threshold) {
+            if (delta > 0) prevSlide();
+            else nextSlide();
+          }
+        });
+
+        track.addEventListener('mouseleave', function () {
+          if (!isDown) return;
+          isDown = false;
+          track.classList.remove('dragging');
+        });
+
+        track.addEventListener('touchstart', function (e) {
+          startX = e.touches[0].clientX;
+        }, { passive: true });
+
+        track.addEventListener('touchend', function (e) {
+          const delta = e.changedTouches[0].clientX - startX;
+          if (Math.abs(delta) >= threshold) {
+            if (delta > 0) prevSlide();
+            else nextSlide();
+          }
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initGallerySliders);
+  </script>
+</body>
+</html>

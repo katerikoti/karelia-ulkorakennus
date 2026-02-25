@@ -19,7 +19,16 @@
       <nav aria-label="Päänavigaatio">
         <ul>
           <li><a href="index.html" class="active">Etusivu</a></li>
-          <li><a href="palvelut.html">Palvelut</a></li>
+          <li class="has-submenu">
+            <span class="nav-parent">Palvelut</span>
+            <div class="submenu">
+              <a href="terassit.html">Terassit</a>
+              <a href="pergolat.html">Pergolat</a>
+              <a href="piharakennukset.html">Piharakennukset</a>
+              <a href="aidat.html">Aidat</a>
+              <a href="piharemontit.html">Piharemontit</a>
+            </div>
+          </li>
           <li><a href="yritys.html">Meistä</a></li>
           <li><a href="yhteydenotto.html">Yhteydenotto</a></li>
         </ul>
@@ -30,7 +39,14 @@
     </div>
     <div class="mobile-nav" id="mobile-nav">
       <a href="index.html" class="active">Etusivu</a>
-      <a href="palvelut.html">Palvelut</a>
+      <a href="#" class="mobile-nav-parent" onclick="event.preventDefault();document.getElementById('mobile-subnav').classList.toggle('open')">Palvelut</a>
+      <div class="mobile-subnav" id="mobile-subnav">
+        <a href="terassit.html" class="sub-link">Terassit</a>
+        <a href="pergolat.html" class="sub-link">Pergolat</a>
+        <a href="piharakennukset.html" class="sub-link">Piharakennukset</a>
+        <a href="aidat.html" class="sub-link">Aidat</a>
+        <a href="piharemontit.html" class="sub-link">Piharemontit</a>
+      </div>
       <a href="yritys.html">Meistä</a>
       <a href="yhteydenotto.html">Yhteydenotto</a>
     </div>
@@ -45,8 +61,8 @@
         <a href="yhteydenotto.html" class="btn">Ota yhteyttä</a>
         <div class="hero-img">
           <picture>
-            <source media="(max-width: 680px)" srcset="mobile-images/terassi.webp">
-            <img src="images/terassi.webp" alt="Piharemontti uudisrakennuksessa omakotitalon pihalla Joensuussa, Enon suunnalla">
+            <source media="(max-width: 680px)" srcset="images/hero.webp">
+            <img src="images/hero.webp" alt="Laadukas puuterassi ja oleskelualue omakotitalon pihalla Joensuussa Pohjois-Karjalassa">
           </picture>
         </div>
         <div class="stats-bar">
@@ -61,53 +77,51 @@
       <div class="container">
         <h2 class="section-title">Mitä teemme</h2>
         <p class="section-sub">Kaikki ulkotilojen rakentaminen ja kunnostaminen yhdeltä tekijältä.</p>
-        <p style="text-align:center; margin-bottom:1.5rem;">
-          <a href="palvelut.html" class="btn btn-outline">Tutustu palveluihin</a>
-        </p>
+        <!-- Removed single "Tutustu palveluihin" button; each card image is clickable to its service page -->
         <div class="cards">
           <article class="card">
-            <div class="card-img">
+            <a class="card-img" href="terassit.html">
               <picture>
                 <source media="(max-width: 680px)" srcset="mobile-images/terassi.webp">
                 <img src="images/terassi.webp" alt="Puinen terassi Enon alueella, näkymä pihan oleskelutilaan ja Pielisjoen rantaan">
               </picture>
-            </div>
+            </a>
             <div class="card-body"><h3>Terassit</h3><p>Kestävät ja tyylikkäät terassit omakotitaloihin ja mökeille.</p></div>
           </article>
           <article class="card">
-            <div class="card-img">
+            <a class="card-img" href="pergolat.html">
               <picture>
                 <source media="(max-width: 680px)" srcset="mobile-images/pergola.webp">
                 <img src="images/pergola.webp" alt="Pergola Jakokosken museokanavan läheisyydessä varjoisa oleskelualue Pielisjoen rannalla">
               </picture>
-            </div>
+            </a>
             <div class="card-body"><h3>Pergolat</h3><p>Tunnelmaa ja varjoa pihalle räätälöitynä toiveidesi mukaan.</p></div>
           </article>
           <article class="card">
-            <div class="card-img">
+            <a class="card-img" href="piharakennukset.html">
               <picture>
                 <source media="(max-width: 680px)" srcset="mobile-images/vierasmaja-2.webp">
                 <img src="images/vierasmaja.webp" alt="Piharakennus ja vierasmaja Kontiolahdella Höytiäisen järven läheisyydessä">
               </picture>
-            </div>
+            </a>
             <div class="card-body"><h3>Piharakennukset</h3><p>Varastot, vierasmajat ja muut – rakennetaan kunnolla kerralla.</p></div>
           </article>
           <article class="card">
-            <div class="card-img">
+            <a class="card-img" href="aidat.html">
               <picture>
                 <source media="(max-width: 680px)" srcset="mobile-images/aidat.webp">
                 <img src="images/aidat.webp" alt="Rakennettu puuaita Polvijärvellä tontin rajalla">
               </picture>
-            </div>
+            </a>
             <div class="card-body"><h3>Aidat</h3><p>Selkeät ja kestävät aidat tonttisi rajaamiseen.</p></div>
           </article>
           <article class="card">
-            <div class="card-img">
+            <a class="card-img" href="piharemontit.html">
               <picture>
                 <source media="(max-width: 680px)" srcset="mobile-images/remontti.webp">
                 <img src="images/remontti.webp" alt="Mökkiterassin remontti Lieksassa, vanhan terassin purku ja uuden rakentaminen vanhan tilalle">
               </picture>
-            </div>
+            </a>
             <div class="card-body"><h3>Piharemontit</h3><p>Kunnostukset nopeasti ja ammattitaidolla.</p></div>
           </article>
         </div>

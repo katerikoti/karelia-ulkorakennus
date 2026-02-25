@@ -19,7 +19,16 @@
       <nav aria-label="Päänavigaatio">
         <ul>
           <li><a href="index.html">Etusivu</a></li>
-          <li><a href="palvelut.html" class="active">Palvelut</a></li>
+          <li class="has-submenu">
+            <span class="nav-parent active">Palvelut</span>
+            <div class="submenu">
+              <a href="terassit.html">Terassit</a>
+              <a href="pergolat.html">Pergolat</a>
+              <a href="piharakennukset.html">Piharakennukset</a>
+              <a href="aidat.html">Aidat</a>
+              <a href="piharemontit.html">Piharemontit</a>
+            </div>
+          </li>
           <li><a href="yritys.html">Meistä</a></li>
           <li><a href="yhteydenotto.html">Yhteydenotto</a></li>
         </ul>
@@ -30,7 +39,14 @@
     </div>
     <div class="mobile-nav" id="mobile-nav">
       <a href="index.html">Etusivu</a>
-      <a href="palvelut.html" class="active">Palvelut</a>
+      <a href="#" class="mobile-nav-parent" onclick="event.preventDefault();document.getElementById('mobile-subnav').classList.toggle('open')">Palvelut</a>
+      <div class="mobile-subnav" id="mobile-subnav">
+        <a href="terassit.html" class="sub-link">Terassit</a>
+        <a href="pergolat.html" class="sub-link">Pergolat</a>
+        <a href="piharakennukset.html" class="sub-link">Piharakennukset</a>
+        <a href="aidat.html" class="sub-link">Aidat</a>
+        <a href="piharemontit.html" class="sub-link">Piharemontit</a>
+      </div>
       <a href="yritys.html">Meistä</a>
       <a href="yhteydenotto.html">Yhteydenotto</a>
     </div>
@@ -46,6 +62,20 @@
       </div>
     </section>
 
+    <section style="padding: 2rem 0 1rem;">
+      <div class="container">
+        <h2 class="section-title">Palvelukohtaiset sivut</h2>
+        <p class="section-sub">Lue tarkemmin jokaisesta palvelusta ennen tarjouspyyntöä.</p>
+        <div class="cards">
+          <article class="card"><div class="card-body"><h3>Terassit</h3><p><a href="terassit.html">Avaa terassipalvelun sivu</a></p></div></article>
+          <article class="card"><div class="card-body"><h3>Pergolat</h3><p><a href="pergolat.html">Avaa pergolapalvelun sivu</a></p></div></article>
+          <article class="card"><div class="card-body"><h3>Piharakennukset</h3><p><a href="piharakennukset.html">Avaa piharakennusten sivu</a></p></div></article>
+          <article class="card"><div class="card-body"><h3>Aidat</h3><p><a href="aidat.html">Avaa aitapalvelun sivu</a></p></div></article>
+          <article class="card"><div class="card-body"><h3>Piharemontit</h3><p><a href="piharemontit.html">Avaa piharemonttien sivu</a></p></div></article>
+        </div>
+      </div>
+    </section>
+
     <!-- Terassit -->
     <section id="terassit">
       <div class="container">
@@ -54,7 +84,7 @@
             <h2>Terassit</h2>
             <p>Terassin rakentaminen on yksi parhaimmista investoinneista omakotitalon tai mökin viihtyvyyteen - se muodostaa jatkeen sisätilasta ulkoilmaan ja luo kesän viettopaikan. Suunnittelemme ja rakennamme terassin, joka sopii juuri sinun tonttiisi, talon tyyliin ja käyttötarpeisiin.</p>
             <p>Karelia Ulkorakennus rakentaa laadukkaat puuterassit, jotka kestävät Pohjois-Karjalan vuodenaikojen vaatimukset. Terassi voidaan toteuttaa maatasoon, korotettuna tai monitasoisena ratkaisuna omakotitaloihin, kesämökeille ja rivitalokohteisiin.</p>
-            <a href="yhteydenotto.html?aihe=terassi" class="btn btn-desktop" style="margin-top:0.5rem;">Pyydä tarjous terassista</a>
+            <a href="terassit.html" class="btn btn-desktop" style="margin-top:0.5rem;">Lue lisää terasseista</a>
           </div>
           <div class="card-img service-media" style="height:260px; border-radius:6px;">
             <picture>
@@ -62,7 +92,7 @@
               <img src="images/terassi.webp" alt="Puinen terassi Enon alueella, näkymä pihan oleskelutilaan ja Pielisjoen rantaan">
             </picture>
           </div>
-          <a href="yhteydenotto.html?aihe=terassi" class="btn btn-mobile" style="margin-top:0.5rem;">Pyydä tarjous terassista</a>
+          <a href="terassit.html" class="btn btn-mobile" style="margin-top:0.5rem;">Lue lisää terasseista</a>
         </div>
       </div>
     </section>
@@ -83,9 +113,9 @@
             <h2>Pergolat</h2>
             <p>Pergola on tyylikäs ratkaisu, joka tuo terassille tai pihalle tunnelmaa ja varjoa. Se sopii erinomaisesti myös pitkien kesäiltojen viettoon.</p>
             <p>Toteutamme pergolat mittatilaustyönä puusta tai yhdistelmämateriaaleista. Pergolan voi varustaa esimerkiksi kasvien kasvualustalla, valaistuksella tai aurinkosuojalla toiveidesi mukaan terassin jatkeeksi, piha-alueille ja taloyhtiöiden yhteistiloihin.</p>
-            <a href="yhteydenotto.html?aihe=pergola" class="btn btn-desktop" style="margin-top:0.5rem;">Pyydä tarjous pergolasta</a>
+            <a href="pergolat.html" class="btn btn-desktop" style="margin-top:0.5rem;">Lue lisää pergoloista</a>
           </div>
-          <a href="yhteydenotto.html?aihe=pergola" class="btn btn-mobile" style="margin-top:0.5rem;">Pyydä tarjous pergolasta</a>
+          <a href="pergolat.html" class="btn btn-mobile" style="margin-top:0.5rem;">Lue lisää pergoloista</a>
         </div>
       </div>
     </section>
@@ -100,7 +130,7 @@
             <h2>Piharakennukset</h2>
             <p>Toimiva piharakennus lisää käytännöllisyyttä ja vapauttaa sisätiloja. Rakennamme varastoja, puuvajoja, vierasmajoja, leikkimökkejä ja muita pieniä ulkorakennuksia.</p>
             <p>Jokainen piharakennus suunnitellaan asiakkaan tarpeiden ja tontin ehtojen mukaan. Huolehdimme, että rakennus on kestävä, asiallinen ja sopii olemassa olevan ympäristön ilmeeseen omakotitaloissa, mökeillä ja pienissä taloyhtiöissä.</p>
-            <a href="yhteydenotto.html?aihe=piharakennus" class="btn btn-desktop" style="margin-top:0.5rem;">Kysy lisää piharakennuksista</a>
+            <a href="piharakennukset.html" class="btn btn-desktop" style="margin-top:0.5rem;">Lue lisää piharakennuksista</a>
           </div>
           <div class="card-img service-media" style="height:260px; border-radius:6px;">
             <picture>
@@ -108,7 +138,7 @@
               <img src="images/vierasmaja.webp" alt="Piharakennus ja vierasmaja Kontiolahdella Höytiäisen järven läheisyydessä">
             </picture>
           </div>
-          <a href="yhteydenotto.html?aihe=piharakennus" class="btn btn-mobile" style="margin-top:0.5rem;">Kysy lisää piharakennuksista</a>
+          <a href="piharakennukset.html" class="btn btn-mobile" style="margin-top:0.5rem;">Lue lisää piharakennuksista</a>
         </div>
       </div>
     </section>
@@ -129,9 +159,9 @@
             <h2>Aidat</h2>
             <p>Selkeä aita rajaa tonttisi, lisää turvallisuutta ja viimeistelee piha-alueen ilmeen. Rakennamme aidat puusta, metallista tai näiden yhdistelmistä.</p>
             <p>Tarjoamme erilaisia aitavaihtoehtoja tarpeen mukaan – yksinkertaisesta rimaidat edustusaitaan. Aita toteutetaan kestävästi niin, että se kestää Suomen talvet huoletta omakotitalon tontin rajauksessa, taloyhtiöiden piha-alueilla ja mökkikohteissa.</p>
-            <a href="yhteydenotto.html?aihe=aita" class="btn btn-desktop" style="margin-top:0.5rem;">Pyydä tarjous aidasta</a>
+            <a href="aidat.html" class="btn btn-desktop" style="margin-top:0.5rem;">Lue lisää aidoista</a>
           </div>
-          <a href="yhteydenotto.html?aihe=aita" class="btn btn-mobile" style="margin-top:0.5rem;">Pyydä tarjous aidasta</a>
+          <a href="aidat.html" class="btn btn-mobile" style="margin-top:0.5rem;">Lue lisää aidoista</a>
         </div>
       </div>
     </section>
@@ -146,7 +176,7 @@
             <h2>Piharemontit</h2>
             <p>Onko vanha terassi lahonnut, aita kallellaan tai piharakennus kaipaava kunnostusta? Hoidamme pienet ja keskisuuret piharemontit nopeasti ja siististi.</p>
             <p>Piharemonttimme kattavat esimerkiksi vanhan terassin purkamisen ja uusimisen, aitojen korjauksen tai piharakennuksen kunnostamisen. Arvioimme tilanteen aina ensin paikan päällä, ja toteutamme remontit kaikkiin kiinteistötyyppeihin pienistä korjauksista laajempiin kokonaisuuksiin.</p>
-            <a href="yhteydenotto.html?aihe=piharemontti" class="btn btn-desktop" style="margin-top:0.5rem;">Kysy piharemonttia</a>
+            <a href="piharemontit.html" class="btn btn-desktop" style="margin-top:0.5rem;">Lue lisää piharemontista</a>
           </div>
           <div class="card-img service-media" style="height:260px; border-radius:6px;">
             <picture>
@@ -154,7 +184,7 @@
               <img src="images/remontti.webp" alt="Mökkiterassin remontti Lieksassa, vanhan terassin purku ja uuden rakentaminen vanhan tilalle">
             </picture>
           </div>
-          <a href="yhteydenotto.html?aihe=piharemontti" class="btn btn-mobile" style="margin-top:0.5rem;">Kysy piharemonttia</a>
+          <a href="piharemontit.html" class="btn btn-mobile" style="margin-top:0.5rem;">Lue lisää piharemontista</a>
         </div>
       </div>
     </section>

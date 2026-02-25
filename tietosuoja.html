@@ -19,7 +19,16 @@
       <nav aria-label="Päänavigaatio">
         <ul>
           <li><a href="index.html">Etusivu</a></li>
-          <li><a href="palvelut.html">Palvelut</a></li>
+          <li class="has-submenu">
+            <span class="nav-parent">Palvelut</span>
+            <div class="submenu">
+              <a href="terassit.html">Terassit</a>
+              <a href="pergolat.html">Pergolat</a>
+              <a href="piharakennukset.html">Piharakennukset</a>
+              <a href="aidat.html">Aidat</a>
+              <a href="piharemontit.html">Piharemontit</a>
+            </div>
+          </li>
           <li><a href="yritys.html">Meistä</a></li>
           <li><a href="yhteydenotto.html">Yhteydenotto</a></li>
         </ul>
@@ -30,7 +39,14 @@
     </div>
     <div class="mobile-nav" id="mobile-nav">
       <a href="index.html">Etusivu</a>
-      <a href="palvelut.html">Palvelut</a>
+      <a href="#" class="mobile-nav-parent" onclick="event.preventDefault();document.getElementById('mobile-subnav').classList.toggle('open')">Palvelut</a>
+      <div class="mobile-subnav" id="mobile-subnav">
+        <a href="terassit.html" class="sub-link">Terassit</a>
+        <a href="pergolat.html" class="sub-link">Pergolat</a>
+        <a href="piharakennukset.html" class="sub-link">Piharakennukset</a>
+        <a href="aidat.html" class="sub-link">Aidat</a>
+        <a href="piharemontit.html" class="sub-link">Piharemontit</a>
+      </div>
       <a href="yritys.html">Meistä</a>
       <a href="yhteydenotto.html">Yhteydenotto</a>
     </div>
