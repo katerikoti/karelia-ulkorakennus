@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yritys – Karelia Ulkorakennus Oy | Joensuu, Pohjois-Karjala</title>
+  <meta name="description" content="Karelia Ulkorakennus Oy on joensuulainen ulkorakentamiseen erikoistunut yritys. Palvelemme Joensuussa, Kontiolahdella, Liperissä ja koko Pohjois-Karjalassa.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a class="logo" href="index.html">Karelia <span>Ulkorakennus</span></a>
+      <nav aria-label="Päänavigaatio">
+        <ul>
+          <li><a href="index.html">Etusivu</a></li>
+          <li><a href="palvelut.html">Palvelut</a></li>
+          <li><a href="yritys.html" class="active">Meistä</a></li>
+          <li><a href="yhteydenotto.html">Yhteydenotto</a></li>
+        </ul>
+      </nav>
+      <div class="hamburger" id="hbg" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="index.html">Etusivu</a>
+      <a href="palvelut.html">Palvelut</a>
+      <a href="yritys.html" class="active">Meistä</a>
+      <a href="yhteydenotto.html">Yhteydenotto</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero" style="padding: 2.5rem 1.5rem;">
+      <div class="container">
+        <h1>Meistä</h1>
+        <p>Luotettava ja rehellisesti toimiva pienyritys Joensuussa.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="about-grid">
+          <div>
+            <h2>Karelia Ulkorakennus Oy</h2>
+            <p>Karelia Ulkorakennus Oy on joensuulainen rakennusalan yritys, joka on erikoistunut ulkotilojen rakentamiseen ja kunnostamiseen. Teemme terasseja, pergoloita, piharakennuksia, aitoja ja pieniä piharemontteja.</p>
+            <p>Tunnemme Pohjois-Karjalan ilmasto-olosuhteet ja osaamme valita materiaalit, jotka kestävät vuodesta toiseen. Asiakkaitamme ovat omakotitaloasujat, mökkiläiset ja pienet taloyhtiöt Joensuussa, Kontiolahdella, Liperissä, Outokummussa ja muualla Pohjois-Karjalassa.</p>
+          </div>
+          <div class="about-img">
+            <img src="images/team.png" alt="Karelia Ulkorakennuksen tiimi yritysrakennuksen edustalla Joensuussa">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+      <div class="container">
+        <h2 class="section-title">Arvomme</h2>
+        <p class="section-sub">Näillä periaatteilla toimimme jokaisessa projektissa.</p>
+        <div class="info-grid">
+          <div class="info-block"><h3>Rehellisyys</h3><p>Kirjallinen tarjous aina ennen töiden aloittamista. Ei piilokustannuksia.</p></div>
+          <div class="info-block"><h3>Laatu</h3><p>Teemme työn huolella niin, että lopputuloksesta voi olla ylpeä.</p></div>
+          <div class="info-block"><h3>Paikallisuus</h3><p>Olemme osa Pohjois-Karjalan yhteisöä – maineemme on meille tärkeä.</p></div>
+          <div class="info-block"><h3>Asiakaslähtöisyys</h3><p>Kuuntelemme ja toteutamme juuri sen, mitä asiakas tarvitsee.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>Toimialueemme</h2>
+        <p>Toimimme ensisijaisesti Joensuun seudulla ja koko Pohjois-Karjalassa:</p>
+        <ul style="list-style: disc; padding-left: 1.5rem; color: var(--support); line-height: 2; margin-bottom: 1.5rem;">
+          <li>Joensuu ja lähikunnat</li>
+          <li>Kontiolahti</li>
+          <li>Liperi</li>
+          <li>Outokumpu</li>
+          <li>Polvijärvi</li>
+          <li>Ilomantsi</li>
+          <li>Muut Pohjois-Karjalan kunnat – kysy erikseen</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="strip">
+      <div class="container">
+        <h2>Haluatko tietää lisää?</h2>
+        <p>Olemme mielellämme yhteydessä ja kerromme, miten voimme auttaa.</p>
+        <a href="yhteydenotto.html" class="btn">Ota yhteyttä</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Karelia <span>Ulkorakennus</span> Oy</div>
+        <p style="margin-top:.4rem;">Joensuu, Pohjois-Karjala</p>
+        <p><a href="mailto:info@kareliarakennus.fi">info@kareliarakennus.fi</a> · <a href="tel:+358501234567">050 123 4567</a></p>
+      </div>
+    </div>
+    <div class="footer-copy">&copy; 2026 Karelia Ulkorakennus Oy. Kaikki oikeudet pidätetään.</div>
+    <div class="footer-privacy"><a href="tietosuojaseloste.html">Tietosuojaseloste</a></div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('hbg').classList.toggle('open');
+      document.getElementById('mobile-nav').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
