@@ -7,7 +7,7 @@
  */
 
 // ── PASTE YOUR KEY HERE ───────────────────────────────────────────────────────
-define('GEMINI_API_KEY', 'AIzaSyDJu4sUuFyhooGNOcOrAokdl3R3ueb5g7k');
+define('GEMINI_API_KEY', 'AIzaSyCh6lolK3JSlldeH3g2Ii-HSHyzzOt5J-Q');
 // ─────────────────────────────────────────────────────────────────────────────
 
 header('Content-Type: application/json');
