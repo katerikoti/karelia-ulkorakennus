@@ -37,7 +37,14 @@ h3 { font-size: 1.1rem; margin-bottom: .4rem; }
 p  { margin-bottom: 1rem; }
 
 .container { max-width: 1060px; margin: 0 auto; padding: 0 1.5rem; }
-section { padding: 3rem 0; }
+section { padding: 2.2rem 0; }
+
+.service-page section { padding: 1.35rem 0; }
+.service-page main > section:first-of-type + section { margin-top: 1.35rem; }
+.service-page .hero p { margin-bottom: 0; }
+.service-page .service-row p:last-child,
+.service-page .service-seo p:last-child { margin-bottom: 0; }
+.service-page .info-grid { margin-top: .85rem; }
 
 /* --- Header & Nav --- */
 header {
@@ -228,6 +235,7 @@ li.has-submenu:focus-within .submenu {
 
 /* --- Section titles --- */
 .section-title { text-align: center; margin-bottom: .4rem; }
+.section-title-left { text-align: left; }
 .section-sub { text-align: center; color: var(--support); margin-bottom: 1.5rem; }
 
 /* --- CTA Strip --- */
@@ -350,5 +358,5 @@ footer { background: var(--primary); color: #A09A92; padding: 2.2rem 1.5rem; fon
   .gallery-slider { grid-template-columns: 38px 1fr 38px; gap: .45rem; }
   .gallery-arrow { width: 38px; height: 38px; font-size: 1.1rem; }
   .gallery-track { max-width: 100%; }
-  .gallery-info { max-width: 100%; }
+  .gallery-info { max-width: calc(100% - 76px - .9rem); }
 }
