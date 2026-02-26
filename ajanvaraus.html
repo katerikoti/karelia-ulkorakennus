@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Varaa suunnitteluaika – Karelia Ulkorakennus Oy</title>
+  <meta name="description" content="Varaa ilmainen suunnitteluaika Karelia Ulkorakennus Oy:ltä. Käymme läpi pihasuunnitelmasi ja annamme tarjouksen – ilman sitoumuksia.">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <style>
+    .calendly-wrap {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      min-height: 700px;
+    }
+    .calendly-inline-widget {
+      min-width: 320px;
+      height: 700px;
+    }
+    .info-boxes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a class="logo" href="index.html">Karelia <span>Ulkorakennus</span></a>
+      <nav aria-label="Päänavigaatio">
+        <ul>
+          <li><a href="index.html">Etusivu</a></li>
+          <li class="has-submenu">
+            <span class="nav-parent">Palvelut</span>
+            <div class="submenu">
+              <a href="terassit.html">Terassit</a>
+              <a href="pergolat.html">Pergolat</a>
+              <a href="piharakennukset.html">Piharakennukset</a>
+              <a href="aidat.html">Aidat</a>
+              <a href="piharemontit.html">Piharemontit</a>
+            </div>
+          </li>
+          <li><a href="faq.html">UKK</a></li><li><a href="yritys.html">Meistä</a></li>
+          <li><a href="yhteydenotto.html" class="active">Yhteydenotto</a></li>
+        </ul>
+      </nav>
+      <div class="hamburger" id="hbg" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="index.html">Etusivu</a>
+      <a href="#" class="mobile-nav-parent" onclick="event.preventDefault();document.getElementById('mobile-subnav').classList.toggle('open')">Palvelut</a>
+      <div class="mobile-subnav" id="mobile-subnav">
+        <a href="terassit.html" class="sub-link">Terassit</a>
+        <a href="pergolat.html" class="sub-link">Pergolat</a>
+        <a href="piharakennukset.html" class="sub-link">Piharakennukset</a>
+        <a href="aidat.html" class="sub-link">Aidat</a>
+        <a href="piharemontit.html" class="sub-link">Piharemontit</a>
+      </div>
+      <a href="faq.html">UKK</a>
+      <a href="yritys.html">Meistä</a>
+      <a href="yhteydenotto.html" class="active">Yhteydenotto</a>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero" style="padding:2.5rem 1.5rem">
+      <div class="container">
+        <h1>Varaa suunnitteluaika</h1>
+        <p>Ilmainen ja sitoutumaton suunnitteluhetki – käymme läpi tarpeesi ja annamme arvion.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+
+        <!-- Info boxes -->
+        <div class="info-boxes">
+          <div class="info-block">
+            <h3>Kesto</h3>
+            <p>Noin 30 minuuttia – sopii hyvin kiireisellekin.</p>
+          </div>
+          <div class="info-block">
+            <h3>Hinta</h3>
+            <p>Täysin ilmainen ja sitoutumaton. Ei piilokuluja.</p>
+          </div>
+          <div class="info-block">
+            <h3>Paikka</h3>
+            <p>Puhelimitse tai paikan päällä – sovitaan yhdessä.</p>
+          </div>
+          <div class="info-block">
+            <h3>Vahvistus</h3>
+            <p>Saat vahvistuksen sähköpostitse heti varauksen jälkeen.</p>
+          </div>
+        </div>
+
+        <!-- Calendly embed -->
+        <div class="calendly-wrap">
+          <div
+            class="calendly-inline-widget"
+            data-url="https://calendly.com/kskrausova/30min?hide_gdpr_banner=1&primary_color=c97d4e"
+          ></div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Karelia <span>Ulkorakennus</span> Oy</div>
+        <p style="margin-top:.4rem;">Joensuu, Pohjois-Karjala</p>
+        <p><a href="mailto:info@kareliarakennus.fi">info@kareliarakennus.fi</a> · <a href="tel:+358501234567">050 123 4567</a></p>
+      </div>
+    </div>
+    <div class="footer-copy">&copy; 2026 Karelia Ulkorakennus Oy. Kaikki oikeudet pidätetään.</div>
+    <div class="footer-privacy"><a href="tietosuoja.html">Tietosuojaseloste</a></div>
+  </footer>
+
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <script src="chatbot.js"></script>
+  <script>
+    function toggleMenu() {
+      document.getElementById('hbg').classList.toggle('open');
+      document.getElementById('mobile-nav').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
