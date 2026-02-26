@@ -202,42 +202,6 @@
   const counter= win.querySelector('#cb-counter');
   const badge  = toggle.querySelector('#cb-badge');
 
-  // ── Local FAQ/KB fallback (used when API is unavailable) ────────────────
-  const KB = [
-    { keys: ['hei','moi','terve'], reply: 'Hei! 👋 Olen Karelia Ulkorakennus Oy:n chatbotti. Mistä haluaisit tietää lisää?', quick: ['Terassit','Hinnoittelu','Toimialue','Avaa UKK-sivu'] },
-    { keys: ['terassi','terassit'], reply: 'Rakennamme kestäviä ja tyylikkäitä terasseja. Haluatko tietää materiaaleista tai hinnoista?', quick: ['Materiaalit','Hinnoittelu','Pyydä tarjous'] },
-    { keys: ['hinta','hinnoittelu','tarjous'], reply: 'Annamme aina ilmaisen kirjallisen tarjouksen ennen töiden aloittamista.', quick: ['Pyydä tarjous'] },
-    { keys: ['yhteystiedot','yhteydenotto','puhelin','sähköposti'], reply: 'Tavoitat meidät: 050 123 4567 · info@kareliarakennus.fi', quick: ['Avaa yhteydenotto'] },
-  ];
-  const DEFAULT_REPLY = 'En valitettavasti saa vastausta palvelimelta. Löydät vastauksia myös UKK-sivultamme: <a href="ukk.html">UKK</a>.';
-
-  const FAQ_ENTRIES = [];
-  (function loadFaq(){
-    try {
-      fetch('faq.html').then(r => r.ok ? r.text() : null).then(html => {
-        if (!html) return;
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        doc.querySelectorAll('.faq-item').forEach(it => {
-          const q = (it.querySelector('.faq-q') || {}).textContent || '';
-          const a = (it.querySelector('.faq-a') || {}).textContent || '';
-          if (q || a) FAQ_ENTRIES.push({ q: q.trim(), a: a.trim(), text: (q + ' ' + a).toLowerCase() });
-        });
-      }).catch(()=>{});
-    } catch(e){}
-  })();
-
-  function getBotReply(userMsg){
-    const msg = userMsg.toLowerCase();
-    const tokens = msg.split(/\W+/).filter(t=>t.length>2);
-    if (tokens.length && FAQ_ENTRIES.length){
-      let best=null; let bestScore=0;
-      for (const f of FAQ_ENTRIES){ let score=0; for(const t of tokens) if (f.text.includes(t)) score++; if (score>bestScore){bestScore=score;best=f;} }
-      const threshold = tokens.length>=3?2:1; if (best && bestScore>=threshold) return { text: best.a, quick: ['Avaa UKK-sivu','Pyydä tarjous'] };
-    }
-    for (const e of KB) if (e.keys.some(k=>msg.includes(k))) return { text: e.reply, quick: e.quick||[] };
-    return { text: DEFAULT_REPLY, quick: ['Avaa UKK-sivu','Avaa yhteydenotto','Pyydä tarjous'] };
-  }
-
   // ── Helpers ───────────────────────────────────────────────────────────────
   function addMsg(text, who) {
     const wrap = document.createElement('div');
@@ -301,6 +265,75 @@
     win.appendChild(lim);
   }
 
+  // ── Local FAQ / KB fallback (works without Gemini) ---------------------
+  const FAQ_ENTRIES = [];
+  const KB = [
+    { q: 'terassi', a: 'Terassin hinta riippuu koosta ja materiaalista. Lähetä mitat tai ota yhteyttä suoraan niin laskemme tarjouksen.' },
+    { q: 'aidat', a: 'Aitojen hinnat ja vaihtoehdot löytyvät palvelut-sivulta. Voimme myös tulla arvioimaan kohteen paikan päällä.' },
+    { q: 'pergolat', a: 'Pergolan hinta riippuu rakenteesta. Ota yhteyttä tarjouspyynnöllä tai soita, niin kerromme lisää.' },
+    { q: 'hinnoittelu', a: 'Hinnoittelu perustuu työn laajuuteen ja materiaaleihin — pyydä tarjous tai käytä yhteydenottolomaketta.' },
+  ];
+
+  async function loadFAQ() {
+    try {
+      const res = await fetch('faq.html');
+      if (!res.ok) return;
+      const txt = await res.text();
+      const tmp = document.createElement('div');
+      tmp.innerHTML = txt;
+      const items = tmp.querySelectorAll('.faq-item');
+      items.forEach(it => {
+        const qEl = it.querySelector('.faq-q');
+        const aEl = it.querySelector('.faq-a');
+        if (qEl && aEl) {
+          const q = qEl.textContent.trim();
+          const a = aEl.textContent.trim();
+          FAQ_ENTRIES.push({ q, a, text: (q + ' ' + a).toLowerCase() });
+        }
+      });
+    } catch (e) {
+      // fail silently — KB still works
+    }
+  }
+
+  function tokenize(s) {
+    return (s || '').toLowerCase().split(/\W+/).filter(Boolean);
+  }
+
+  function scoreMatch(msg, entry) {
+    const mts = tokenize(msg);
+    if (!mts.length) return 0;
+    const set = new Set(tokenize(entry.text || (entry.q + ' ' + entry.a)));
+    let matches = 0;
+    mts.forEach(t => { if (set.has(t)) matches++; });
+    return matches;
+  }
+
+  function getBotReply(userMsg) {
+    const msg = (userMsg || '').trim();
+    if (!msg) return 'Hei! Miten voin auttaa?';
+
+    // 1) best FAQ match by token overlap
+    let best = null; let bestScore = 0;
+    for (const e of FAQ_ENTRIES) {
+      const sc = scoreMatch(msg, e);
+      if (sc > bestScore) { bestScore = sc; best = e; }
+    }
+    if (best && bestScore >= 1) return best.a;
+
+    // 2) simple KB substring checks
+    const low = msg.toLowerCase();
+    for (const k of KB) {
+      if (low.includes(k.q)) return k.a;
+    }
+
+    // 3) fallback friendly reply
+    return 'Pahoittelen, en löytänyt suoraa vastausta UKK:stamme. Ota yhteyttä: 050 123 4567 tai käytä yhteydenottolomaketta.';
+  }
+
+  // start loading FAQ in background
+  loadFAQ();
+
   // ── Send message ──────────────────────────────────────────────────────────
   async function sendMessage(text) {
     if (!text.trim() || userMsgCount >= MAX_MESSAGES) return;
@@ -313,39 +346,20 @@
     setLoading(true);
     showTyping();
 
-    try {
-        const res = await fetch(API_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: text })
-        });
-        if (!res.ok) {
-          // fallback to local KB/FAQ when API is unavailable
-          removeTyping();
-          const { text: reply, quick } = getBotReply(text);
-          addMsg(reply, 'bot');
-          showQuick(quick);
-        } else {
-          const data = await res.json();
-          removeTyping();
-          const reply = data.reply || 'Pahoittelen, yritä uudelleen tai ota yhteyttä suoraan!';
-          addMsg(reply, 'bot');
-          showQuick(['Avaa UKK-sivu', 'Ota yhteyttä', 'Varaa aika']);
-        }
-    } catch (err) {
-      // On network or other errors, use local fallback so chat still responds
+    // Use local FAQ/KB reply (no external AI). Simulate typing delay.
+    const typingDelay = 600 + Math.min(1200, text.length * 40);
+    setTimeout(() => {
       removeTyping();
-      const { text: reply, quick } = getBotReply(text);
+      const reply = getBotReply(text);
       addMsg(reply, 'bot');
-      showQuick(quick);
-    }
+      showQuick(['Avaa UKK-sivu', 'Ota yhteyttä', 'Varaa aika']);
+      setLoading(false);
 
-    setLoading(false);
-
-    if (userMsgCount >= MAX_MESSAGES) {
-      addMsg('Olet käyttänyt tämän istunnon viestirajoituksen. Ota yhteyttä suoraan tai varaa aika! 😊', 'bot');
-      lockChat();
-    }
+      if (userMsgCount >= MAX_MESSAGES) {
+        addMsg('Olet käyttänyt tämän istunnon viestirajoituksen. Ota yhteyttä suoraan tai varaa aika! 😊', 'bot');
+        lockChat();
+      }
+    }, typingDelay);
   }
 
   // ── Events ────────────────────────────────────────────────────────────────
