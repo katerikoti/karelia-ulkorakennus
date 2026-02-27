@@ -123,7 +123,7 @@
     #cb-messages {
       flex: 1; overflow-y: auto; padding: 1rem;
       display: flex; flex-direction: column; gap: .7rem;
-      max-height: 320px; min-height: 200px;
+      max-height: min(60vh, 520px); min-height: 240px;
     }
     #cb-quick { padding: .5rem 1rem .75rem; min-height: 0; }
     #cb-counter {
