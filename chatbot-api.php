@@ -60,9 +60,9 @@ Tietoja yrityksestä:
 - Sähköposti: info@kareliarakennus.fi
 - Kotitalousvähennys: käytettävissä työn osuuteen
 - Toimikausi: pääasiassa huhti-lokakuu
-- UKK-sivu: ukk.html
-- Ajanvaraus: ajanvaraus.html (ilmainen 30 min suunnitteluaika)
-- Yhteydenottolomake: yhteydenotto.html
+- UKK-sivu: ukk
+- Ajanvaraus: ajanvaraus (ilmainen 30 min suunnitteluaika)
+- Yhteydenottolomake: yhteydenotto
 
 Suuntaa-antavat hinnat (aina mainittava että tarkka hinta selviää ilmaisesta tarjouksesta):
 - Yksinkertainen puuterassi (n. 15 m²): 2 500–4 500 €
