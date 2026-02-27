@@ -28,6 +28,7 @@
 
   function resetSessionMemory() {
     conversationHistory.length = 0;
+    transcript.length = 0;
     userMsgCount = 0;
     updateCounter();
     saveState();
@@ -300,7 +301,7 @@
 
     if (isConversationEnd) {
       removeTyping();
-      const endReply = 'Kiitos viestistä! Mukavaa päivää sinullekin.';
+      const endReply = 'Mukavaa päivää.';
       addMsg(endReply, 'bot');
       resetSessionMemory();
       return;
@@ -345,9 +346,10 @@
     }
 
     if (userMsgCount >= MAX_MESSAGES) {
-      addMsg('Olet käyttänyt viestirajoituksen.', 'bot');
+      addMsg('Viestiraja on täynnä tältä istunnolta. Jatka yhteydenottolomakkeella.', 'bot');
       input.disabled = true;
       sendBtn.disabled = true;
+      qArea.innerHTML = '';
       saveState();
     }
   }
@@ -393,8 +395,19 @@
     }
   }, 4000);
 
+  function clearStateOnReload() {
+    try {
+      const nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || null;
+      const isReload = nav ? nav.type === 'reload' : performance.navigation && performance.navigation.type === 1;
+      if (isReload) {
+        sessionStorage.removeItem(STORAGE_KEY);
+      }
+    } catch (e) {}
+  }
+
   // Restore session state across page navigations
   (function restoreState() {
+    clearStateOnReload();
     const state = loadState();
     if (!state) return;
 
