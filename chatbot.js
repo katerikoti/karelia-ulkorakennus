@@ -6,14 +6,32 @@
 (function () {
   console.log('chatbot.js loaded');
 
-  const MAX_MESSAGES = 10;
+  const MAX_MESSAGES = 8;
   const BOT_NAME     = 'Karel-botti';
   const ACCENT       = '#C97D4E';
   const PRIMARY      = '#2E2E3A';
   const API_ENDPOINT = 'chatbot-api.php';
+  const STORAGE_KEY  = 'karel_chat_state_v1';
 
   let open = false;
   let userMsgCount = 0;
+  const MAX_CONTEXT_TURNS = 8;
+  const transcript = [];
+  const conversationHistory = [];
+
+  function pushHistory(role, content) {
+    conversationHistory.push({ role, content });
+    if (conversationHistory.length > MAX_CONTEXT_TURNS) {
+      conversationHistory.splice(0, conversationHistory.length - MAX_CONTEXT_TURNS);
+    }
+  }
+
+  function resetSessionMemory() {
+    conversationHistory.length = 0;
+    userMsgCount = 0;
+    updateCounter();
+    saveState();
+  }
 
   // Basic styles to keep widget visible regardless of page CSS
   const style = document.createElement('style');
@@ -60,6 +78,7 @@
       position: fixed; bottom: 5rem; right: 1.5rem; z-index: 9998;
       width: 340px; max-width: calc(100vw - 2rem);
       background: #FAF7F2; border-radius: 12px;
+      border: 0.5px solid rgba(255,255,255,.7);
       box-shadow: 0 8px 32px rgba(0,0,0,.18);
       display: flex; flex-direction: column;
       overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif;
@@ -205,13 +224,46 @@
   const sendBtn = win.querySelector('#cb-send');
   const counter = win.querySelector('#cb-counter');
 
-  function addMsg(text, who) {
+  function saveState() {
+    try {
+      const state = {
+        open,
+        userMsgCount,
+        transcript,
+        conversationHistory
+      };
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  function loadState() {
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function addMsg(text, who, persist = true) {
     const div = document.createElement('div');
     div.style.margin = '6px 0';
     div.style.textAlign = who === 'user' ? 'right' : 'left';
-    div.innerHTML = `<span style="background:${who==='user'?ACCENT:'#eee'};color:${who==='user'?'#fff':'#000'};padding:6px 10px;border-radius:12px;display:inline-block;max-width:80%;">${text}</span>`;
+    let rendered = text;
+    if (who === 'bot') {
+      rendered = rendered
+        .replace(/\b(varauskalenteri|ajanvaraussivulla|ajanvaraussivullamme|ajanvaraus)\b/gi, '<a href="ajanvaraus.html">$1</a>')
+        .replace(/\b(yhteydenottolomake|yhteydenottolomakkeella)\b/gi, '<a href="yhteydenotto.html">$1</a>')
+        .replace(/\b(ukk|usein kysytyt kysymykset)\b/gi, '<a href="faq.html">$1</a>');
+    }
+    div.innerHTML = `<span style="background:${who==='user'?ACCENT:'#eee'};color:${who==='user'?'#fff':'#000'};padding:6px 10px;border-radius:12px;display:inline-block;max-width:80%;">${rendered}</span>`;
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
+    if (persist) {
+      transcript.push({ who, text });
+      saveState();
+    }
   }
 
   function showTyping() {
@@ -227,19 +279,50 @@
     if (t) t.remove();
   }
 
+  function updateCounter() {
+    const remaining = Math.max(0, MAX_MESSAGES - userMsgCount);
+    counter.textContent = `${remaining} viestiä jäljellä`;
+  }
+
   async function sendMessage(text) {
     if (!text.trim() || userMsgCount >= MAX_MESSAGES) return;
 
     addMsg(text, 'user');
+    pushHistory('user', text);
     input.value = '';
     userMsgCount++;
+    updateCounter();
     showTyping();
 
+    const normalized = text.trim().toLowerCase();
+    const isConversationEnd = /\b(ei kiitos|ei kiitoksia|ei muuta|ei,? kiitos|mukavaa päivää|hyvää päivänjatkoa|heippa|moikka)\b/i.test(normalized);
+    const isThanks = /\b(kiitos|kiitoksia|kiitti|thanks|thx)\b/i.test(normalized);
+
+    if (isConversationEnd) {
+      removeTyping();
+      const endReply = 'Kiitos viestistä! Mukavaa päivää sinullekin.';
+      addMsg(endReply, 'bot');
+      resetSessionMemory();
+      return;
+    }
+
+    if (isThanks) {
+      removeTyping();
+      const thanksReply = 'Ole hyvä! Autan mielelläni lisää. Onko jotain muuta, missä voin auttaa?';
+      addMsg(thanksReply, 'bot');
+      resetSessionMemory();
+      return;
+    }
+
     try {
+      const historyForApi = conversationHistory.slice(-MAX_CONTEXT_TURNS);
       const res = await fetch(API_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({
+          message: text,
+          history: historyForApi
+        })
       });
 
       const data = await res.json();
@@ -247,19 +330,25 @@
 
       if (data.reply) {
         addMsg(data.reply, 'bot');
+        pushHistory('assistant', data.reply);
       } else {
-        addMsg(getBotReply(text), 'bot');
+        const fallbackReply = getBotReply(text);
+        addMsg(fallbackReply, 'bot');
+        pushHistory('assistant', fallbackReply);
       }
 
     } catch (err) {
       removeTyping();
-      addMsg(getBotReply(text), 'bot');
+      const fallbackReply = getBotReply(text);
+      addMsg(fallbackReply, 'bot');
+      pushHistory('assistant', fallbackReply);
     }
 
     if (userMsgCount >= MAX_MESSAGES) {
       addMsg('Olet käyttänyt viestirajoituksen.', 'bot');
       input.disabled = true;
       sendBtn.disabled = true;
+      saveState();
     }
   }
 
@@ -275,8 +364,9 @@
     if (open && msgs.children.length === 0) {
       addMsg('Hei! 👋 Miten voin auttaa?', 'bot');
       qArea.innerHTML = '';
-      counter.textContent = `${MAX_MESSAGES - userMsgCount} viestiä jäljellä`;
+      updateCounter();
     }
+    saveState();
   });
 
   win.querySelector('#cb-close').addEventListener('click', () => {
@@ -284,6 +374,7 @@
     win.classList.remove('open');
     toggle.innerHTML = CHAT_ICON;
     toggle.classList.add('pulse');
+    saveState();
   });
 
   sendBtn.addEventListener('click', () => sendMessage(input.value));
@@ -301,5 +392,45 @@
       toggle.classList.add('pulse');
     }
   }, 4000);
+
+  // Restore session state across page navigations
+  (function restoreState() {
+    const state = loadState();
+    if (!state) return;
+
+    if (Array.isArray(state.transcript)) {
+      state.transcript.forEach(m => {
+        if (!m || typeof m.text !== 'string' || (m.who !== 'user' && m.who !== 'bot')) return;
+        transcript.push({ who: m.who, text: m.text });
+        addMsg(m.text, m.who, false);
+      });
+    }
+
+    if (Array.isArray(state.conversationHistory)) {
+      state.conversationHistory.forEach(m => {
+        if (!m || (m.role !== 'user' && m.role !== 'assistant') || typeof m.content !== 'string') return;
+        conversationHistory.push({ role: m.role, content: m.content });
+      });
+    }
+
+    if (Number.isInteger(state.userMsgCount) && state.userMsgCount >= 0) {
+      userMsgCount = state.userMsgCount;
+    }
+
+    updateCounter();
+    showQuick();
+
+    if (userMsgCount >= MAX_MESSAGES) {
+      input.disabled = true;
+      sendBtn.disabled = true;
+    }
+
+    if (state.open) {
+      open = true;
+      win.classList.add('open');
+      toggle.innerHTML = CLOSE_ICON;
+      toggle.classList.remove('pulse');
+    }
+  })();
 
 })();
