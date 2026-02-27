@@ -1,3 +1,10 @@
+/* Chatbot fallback link style */
+.cb-link {
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
 /* Chatbot toggle button always visible */
 #cb-toggle {
   position: fixed;

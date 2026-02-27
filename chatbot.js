@@ -174,7 +174,7 @@
     if (inEnglish) {
       return 'Sorry, I could not find an exact answer right now. Please contact us at 050 123 4567 or use the contact form.';
     }
-    return 'Pahoittelen, en löytänyt tarkkaa vastausta. Ota yhteyttä: 050 123 4567 tai käytä lomaketta.';
+    return "Pahoittelen, en löytänyt tarkkaa vastausta. Ota yhteyttä: 050 123 4567 tai käytä <span class='cb-link' onclick=\"window.location.href='yhteydenotto.html'\">yhteydenottolomaketta</span>.";
   }
 
   // ================= UI (unchanged logic) =================
