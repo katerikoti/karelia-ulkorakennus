@@ -160,10 +160,19 @@
     { q: 'hinnoittelu', a: 'Hinnoittelu perustuu työn laajuuteen ja materiaaleihin. Pyydä tarjous!' },
   ];
 
+  function wantsEnglish(text) {
+    const t = (text || '').toLowerCase();
+    return /\b(english|in english|speak english|answer in english|can you help in english)\b/.test(t);
+  }
+
   function getBotReply(userMsg) {
     const low = userMsg.toLowerCase();
+    const inEnglish = wantsEnglish(low);
     for (const k of KB) {
       if (low.includes(k.q)) return k.a;
+    }
+    if (inEnglish) {
+      return 'Sorry, I could not find an exact answer right now. Please contact us at 050 123 4567 or use the contact form.';
     }
     return 'Pahoittelen, en löytänyt tarkkaa vastausta. Ota yhteyttä: 050 123 4567 tai käytä lomaketta.';
   }
