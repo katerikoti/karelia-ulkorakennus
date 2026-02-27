@@ -174,7 +174,7 @@
     if (inEnglish) {
       return 'Sorry, I could not find an exact answer right now. Please contact us at 050 123 4567 or use the contact form.';
     }
-    return "Pahoittelen, en löytänyt tarkkaa vastausta. Ota yhteyttä: 050 123 4567 tai käytä <span class='cb-link' onclick=\"window.location.href='yhteydenotto.html'\">yhteydenottolomaketta</span>.";
+    return "En löytänyt vastausta. Ota yhteyttä: 050 123 4567 tai käytä <span class='cb-link' onclick=\"window.location.href='yhteydenotto.html'\">yhteydenottolomaketta</span>.";
   }
 
   // ================= UI (unchanged logic) =================
@@ -310,16 +310,14 @@
 
     if (isConversationEnd) {
       removeTyping();
-      const endReply = 'Mukavaa päivää.';
-      addMsg(endReply, 'bot');
+      addMsg('Kiitos! Mukavaa päivää. Jos tarvitset lisää apua, käytä yhteydenottolomaketta.', 'bot');
       resetSessionMemory();
       return;
     }
 
     if (isThanks) {
       removeTyping();
-      const thanksReply = 'Ole hyvä! Autan mielelläni lisää. Onko jotain muuta, missä voin auttaa?';
-      addMsg(thanksReply, 'bot');
+      addMsg('Ole hyvä! Jos tarvitset lisää apua, käytä yhteydenottolomaketta.', 'bot');
       resetSessionMemory();
       return;
     }

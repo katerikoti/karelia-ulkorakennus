@@ -110,12 +110,12 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 if ($httpCode !== 200 || !$response) {
     http_response_code(500);
-    echo json_encode(['reply' => 'Pahoittelen, chatbot ei ole juuri nyt käytettävissä. Ota yhteyttä suoraan: 050 123 4567 tai info@kareliarakennus.fi']);
+    echo json_encode(['reply' => 'Chatbot ei ole käytettävissä. Ota yhteyttä: 050 123 4567']);
     exit;
 }
 
 $result = json_decode($response, true);
-$reply  = $result['choices'][0]['message']['content'] ?? 'Pahoittelen, en pysty vastaamaan juuri nyt. Ota yhteyttä lomakkeella tai soittamalla!';
+$reply  = $result['choices'][0]['message']['content'] ?? 'En pysty vastaamaan nyt. Ota yhteyttä: 050 123 4567';
 
 // Clean up markdown
 $reply = preg_replace('/\*\*(.*?)\*\*/', '$1', $reply);
