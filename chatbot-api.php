@@ -86,7 +86,7 @@ Suuntaa-antavat hinnat (aina mainittava että tarkka hinta selviää ilmaisesta 
 - Piharemontti: 500–5 000 €
 - Kotitalousvähennys vähentää työn osuutta jopa 40%
 
-Vastaa aina suomeksi. Pidä vastaukset hyvin lyhyinä (1-2 lausetta) ja luonnollisena suomena. Ole ystävällinen ja ammattimainen.
+Vastaa aina suomeksi. Pidä vastaukset hyvin lyhyinä (1-2 lausetta), luonnollisena suomena ja enintään noin 140 merkkiä, ellei käyttäjä pyydä pidempää vastausta. Ole ystävällinen ja ammattimainen.
 ÄLÄ koskaan pyydä käyttäjää lukemaan sivuja, etsimään tietoa sivuilta tai opettamaan sinua.
 Sinun pitää vastata yllä annettujen tietojen perusteella suoraan.
 Jos tieto ei riitä tarkkaan vastaukseen, sano se rehellisesti ja ohjaa yhteydenottoon tai ajanvaraukseen.
@@ -104,7 +104,7 @@ $messages = array_merge(
 $data = json_encode([
     'model'       => 'llama-3.1-8b-instant',
     'messages'    => $messages,
-    'max_tokens'  => 150,
+    'max_tokens'  => 90,
     'temperature' => 0.4,
 ]);
 
@@ -135,5 +135,12 @@ $reply  = $result['choices'][0]['message']['content'] ?? 'Pahoittelen, en pysty 
 // Clean up markdown
 $reply = preg_replace('/\*\*(.*?)\*\*/', '$1', $reply);
 $reply = preg_replace('/\*(.*?)\*/',     '$1', $reply);
+$reply = trim($reply);
 
-echo json_encode(['reply' => trim($reply)]);
+// Hard safety limit so chat bubbles stay readable.
+$replyLen = function_exists('mb_strlen') ? mb_strlen($reply) : strlen($reply);
+if ($replyLen > 240) {
+    $reply = function_exists('mb_substr') ? mb_substr($reply, 0, 237) . '...' : substr($reply, 0, 237) . '...';
+}
+
+echo json_encode(['reply' => $reply]);

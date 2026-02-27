@@ -258,7 +258,7 @@
         .replace(/\b(yhteydenottolomake|yhteydenottolomakkeella)\b/gi, '<a href="yhteydenotto.html">$1</a>')
         .replace(/\b(ukk|usein kysytyt kysymykset)\b/gi, '<a href="faq.html">$1</a>');
     }
-    div.innerHTML = `<span style="background:${who==='user'?ACCENT:'#eee'};color:${who==='user'?'#fff':'#000'};padding:6px 10px;border-radius:12px;display:inline-block;max-width:80%;">${rendered}</span>`;
+    div.innerHTML = `<span style="background:${who==='user'?ACCENT:'#eee'};color:${who==='user'?'#fff':'#000'};padding:6px 10px;border-radius:12px;display:inline-block;max-width:80%;white-space:normal;overflow-wrap:anywhere;word-break:break-word;">${rendered}</span>`;
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
     if (persist) {
