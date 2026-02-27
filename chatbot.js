@@ -337,8 +337,14 @@
       removeTyping();
 
       if (data.reply) {
-        addMsg(data.reply, 'bot');
-        pushHistory('assistant', data.reply);
+        // Limit bot reply length for visibility
+        let reply = data.reply;
+        const MAX_REPLY_LENGTH = 400;
+        if (reply.length > MAX_REPLY_LENGTH) {
+          reply = reply.slice(0, MAX_REPLY_LENGTH) + '...';
+        }
+        addMsg(reply, 'bot');
+        pushHistory('assistant', reply);
       } else {
         const fallbackReply = getBotReply(text);
         addMsg(fallbackReply, 'bot');
