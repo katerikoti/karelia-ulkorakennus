@@ -13,7 +13,7 @@ define('DB_PASS',    'iq3A5oHZX8w9izVw7jH2');
 define('DB_CHARSET', 'utf8mb4');
 
 // ── Brevo-asetukset ─────────────────────────────────────────
-define('BREVO_API_KEY', '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');
+define('BREVO_API_KEY', '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');
 define('SENDER_EMAIL',  'kskrausova@gmail.com');
 define('SENDER_NAME',   'Karelia Ulkorakennus Oy');
 define('NOTIFY_EMAIL',  'kskrausova@gmail.com'); // saat ilmoituksen uudesta varauksesta
@@ -77,15 +77,11 @@ function rakennaSahkopostiAsiakkaalle(
     string $etunimi,
     string $sukunimi,
     string $pvm,
-    string $aika,
-    string $palvelu,
-    string $lisatiedot
+    string $aika
 ): string {
-    $nimi         = htmlspecialchars($etunimi . ' ' . $sukunimi);
-    $pvm_fi       = htmlspecialchars(date('d.m.Y', strtotime($pvm)));
-    $aika_h       = htmlspecialchars($aika);
-    $palvelu_h    = $palvelu    ? htmlspecialchars($palvelu)    : '–';
-    $lisatiedot_h = $lisatiedot ? nl2br(htmlspecialchars($lisatiedot)) : '–';
+    $nimi   = htmlspecialchars($etunimi . ' ' . $sukunimi);
+    $pvm_fi = htmlspecialchars(date('d.m.Y', strtotime($pvm)));
+    $aika_h = htmlspecialchars($aika);
 
     return <<<HTML
 <!DOCTYPE html>
@@ -130,12 +126,8 @@ function rakennaSahkopostiAsiakkaalle(
                       <td style="padding:5px 0;font-weight:600;">{$aika_h}</td>
                     </tr>
                     <tr>
-                      <td style="padding:5px 0;color:#8a7060;">Palvelu</td>
-                      <td style="padding:5px 0;">{$palvelu_h}</td>
-                    </tr>
-                    <tr>
-                      <td style="padding:5px 0;color:#8a7060;vertical-align:top;">Lisätiedot</td>
-                      <td style="padding:5px 0;">{$lisatiedot_h}</td>
+                      <td style="padding:5px 0;color:#8a7060;">Kesto</td>
+                      <td style="padding:5px 0;">~30 minuuttia</td>
                     </tr>
                   </table>
                 </td>
@@ -182,17 +174,13 @@ function rakennaSahkopostiAdminille(
     string $puhelin,
     string $email,
     string $pvm,
-    string $aika,
-    string $palvelu,
-    string $lisatiedot
+    string $aika
 ): string {
-    $nimi         = htmlspecialchars($etunimi . ' ' . $sukunimi);
-    $pvm_fi       = htmlspecialchars(date('d.m.Y', strtotime($pvm)));
-    $aika_h       = htmlspecialchars($aika);
-    $puhelin_h    = htmlspecialchars($puhelin);
-    $email_h      = htmlspecialchars($email);
-    $palvelu_h    = $palvelu    ? htmlspecialchars($palvelu)    : '–';
-    $lisatiedot_h = $lisatiedot ? nl2br(htmlspecialchars($lisatiedot)) : '–';
+    $nimi      = htmlspecialchars($etunimi . ' ' . $sukunimi);
+    $pvm_fi    = htmlspecialchars(date('d.m.Y', strtotime($pvm)));
+    $aika_h    = htmlspecialchars($aika);
+    $puhelin_h = htmlspecialchars($puhelin);
+    $email_h   = htmlspecialchars($email);
 
     return <<<HTML
 <!DOCTYPE html>
@@ -218,11 +206,6 @@ function rakennaSahkopostiAdminille(
               <tr><td style="padding:6px 0;color:#8a7060;">Sähköposti</td> <td style="padding:6px 0;"><a href="mailto:{$email_h}" style="color:#c97d4e;">{$email_h}</a></td></tr>
               <tr><td style="padding:6px 0;color:#8a7060;">Päivämäärä</td> <td style="padding:6px 0;font-weight:600;">{$pvm_fi}</td></tr>
               <tr><td style="padding:6px 0;color:#8a7060;">Aika</td>       <td style="padding:6px 0;font-weight:600;">{$aika_h}</td></tr>
-              <tr><td style="padding:6px 0;color:#8a7060;">Palvelu</td>    <td style="padding:6px 0;">{$palvelu_h}</td></tr>
-              <tr>
-                <td style="padding:6px 0;color:#8a7060;vertical-align:top;">Lisätiedot</td>
-                <td style="padding:6px 0;">{$lisatiedot_h}</td>
-              </tr>
             </table>
             <p style="margin:20px 0 0;font-size:13px;color:#8a7060;">
               Hallitse varauksia: <a href="admin.php" style="color:#c97d4e;">admin.php</a>
@@ -365,7 +348,7 @@ lahetaSahkoposti(
     $koko_nimi,
     'Suunnitteluaikasi on vahvistettu – Karelia Ulkorakennus Oy',
     rakennaSahkopostiAsiakkaalle(
-        $etunimi, $sukunimi, $toivottu_pvm, $toivottu_aika, $palvelu, $lisatiedot
+        $etunimi, $sukunimi, $toivottu_pvm, $toivottu_aika
     )
 );
 
@@ -376,7 +359,7 @@ lahetaSahkoposti(
     'Uusi varaus: ' . $koko_nimi . ' – ' . date('d.m.Y', strtotime($toivottu_pvm)),
     rakennaSahkopostiAdminille(
         $etunimi, $sukunimi, $puhelin, $email,
-        $toivottu_pvm, $toivottu_aika, $palvelu, $lisatiedot
+        $toivottu_pvm, $toivottu_aika
     )
 );
 

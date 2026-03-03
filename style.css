@@ -454,17 +454,17 @@ footer { background: var(--primary); color: #A09A92; padding: 2.2rem 1.5rem; fon
 /* ── Page shell ── */
 .booking-section {
   background: var(--fog);
-  padding: 3rem 1.5rem 5rem;
+  padding: 1.5rem 1.5rem 3rem;
 }
 
 .booking-shell {
-  max-width: 780px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
 .booking-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
   color: var(--bark);
   margin: 0 0 .4rem;
   line-height: 1.15;
@@ -474,7 +474,7 @@ footer { background: var(--primary); color: #A09A92; padding: 2.2rem 1.5rem; fon
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: .95rem;
   color: var(--bark-mid);
-  margin: 0 0 2.5rem;
+  margin: 0 0 1.2rem;
   font-weight: 300;
 }
 
@@ -482,7 +482,7 @@ footer { background: var(--primary); color: #A09A92; padding: 2.2rem 1.5rem; fon
 .progress-track {
   display: flex;
   align-items: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: .75rem;
 }
 
 .progress-step {
@@ -558,24 +558,24 @@ footer { background: var(--primary); color: #A09A92; padding: 2.2rem 1.5rem; fon
 
 /* ── Panel regions ── */
 .panel-header {
-  padding: 2rem 2.2rem 1.4rem;
+  padding: 1.2rem 1.8rem 1rem;
   border-bottom: 1px solid var(--fog2);
 }
 
 .panel-header h2 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.45rem; color: var(--bark); margin: 0 0 .25rem;
+  font-size: 1.2rem; color: var(--bark); margin: 0 0 .15rem;
 }
 
 .panel-header p {
   font-family: 'DM Sans', sans-serif;
-  font-size: .88rem; color: var(--bark-mid); margin: 0; font-weight: 300;
+  font-size: .82rem; color: var(--bark-mid); margin: 0; font-weight: 300;
 }
 
 .panel-body { padding: 1.8rem 2.2rem 2rem; }
 
 .panel-footer {
-  padding: 1.2rem 2.2rem 1.8rem;
+  padding: .9rem 1.8rem 1.2rem;
   border-top: 1px solid var(--fog2);
   display: flex; justify-content: space-between; align-items: center; gap: 1rem;
 }
@@ -583,7 +583,7 @@ footer { background: var(--primary); color: #A09A92; padding: 2.2rem 1.5rem; fon
 /* ── Calendar ── */
 .cal-nav {
   display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 1.2rem;
+  margin-bottom: .75rem;
 }
 
 .cal-month {
@@ -604,22 +604,22 @@ footer { background: var(--primary); color: #A09A92; padding: 2.2rem 1.5rem; fon
 .cal-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
+  gap: 3px;
 }
 
 .cal-weekday {
   font-family: 'DM Sans', sans-serif;
-  font-size: .72rem; font-weight: 600; color: var(--bark-mid);
-  text-align: center; padding: .4rem 0;
+  font-size: .68rem; font-weight: 600; color: var(--bark-mid);
+  text-align: center; padding: .25rem 0;
   text-transform: uppercase; letter-spacing: .06em;
 }
 
 .cal-day {
-  aspect-ratio: 1; border-radius: 8px;
+  aspect-ratio: 1; border-radius: 6px; max-height: 44px;
   border: 1.5px solid transparent; background: transparent;
   cursor: pointer;
   font-family: 'DM Sans', sans-serif;
-  font-size: .88rem; font-weight: 500; color: var(--bark);
+  font-size: .82rem; font-weight: 500; color: var(--bark);
   display: flex; align-items: center; justify-content: center;
   transition: all .18s; position: relative;
 }

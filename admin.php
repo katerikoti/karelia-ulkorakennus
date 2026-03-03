@@ -6,7 +6,7 @@
 // ============================================================
 
 // ── Asetukset ────────────────────────────────────────────────
-define('ADMIN_PASSWORD', 'kujoensuu2026');   // ← VAIHDA tämä!
+define('ADMIN_PASSWORD', 'kujoensuu26');   // ← VAIHDA tämä!
 
 define('DB_HOST',    'localhost');
 define('DB_NAME',    'karelia-db');
@@ -367,8 +367,6 @@ function tilaBadge(string $tila): string {
               <th>Nimi</th>
               <th>Yhteystiedot</th>
               <th>Toivottu aika</th>
-              <th>Palvelu</th>
-              <th>Lisätiedot</th>
               <th>Tila</th>
               <th>Varattu</th>
             </tr>
@@ -376,7 +374,7 @@ function tilaBadge(string $tila): string {
           <tbody>
             <?php foreach ($varaukset as $v): ?>
             <tr>
-              <td style="color:var(--muted);font-size:.8rem"><?= $v['id'] ?></td>
+              <td><?= $v['id'] ?></td>
               <td>
                 <strong><?= htmlspecialchars($v['etunimi'] . ' ' . $v['sukunimi']) ?></strong>
               </td>
@@ -387,10 +385,6 @@ function tilaBadge(string $tila): string {
               <td>
                 <?= htmlspecialchars(date('d.m.Y', strtotime($v['toivottu_pvm']))) ?><br>
                 <span style="color:var(--muted)"><?= htmlspecialchars($v['toivottu_aika']) ?></span>
-              </td>
-              <td><?= $v['palvelu'] ? htmlspecialchars($v['palvelu']) : '<span style="color:var(--muted)">–</span>' ?></td>
-              <td style="max-width:200px;white-space:pre-wrap;word-break:break-word">
-                <?= $v['lisatiedot'] ? htmlspecialchars(mb_strimwidth($v['lisatiedot'], 0, 120, '…')) : '<span style="color:var(--muted)">–</span>' ?>
               </td>
               <td>
                 <?= tilaBadge($v['tila']) ?>
