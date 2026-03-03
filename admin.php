@@ -14,6 +14,8 @@ define('DB_USER',    'karelia-user');
 define('DB_PASS',    'iq3A5oHZX8w9izVw7jH2');
 define('DB_CHARSET', 'utf8mb4');
 
+session_start();
+
 // ── Sähköpostiasetukset ──────────────────────────────────────
 define('BREVO_API_KEY', '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');
 define('SENDER_EMAIL',  'kskrausova@gmail.com');
