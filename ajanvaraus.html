@@ -4,28 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Varaa suunnitteluaika – Karelia Ulkorakennus Oy</title>
-  <meta name="description" content="Varaa ilmainen suunnitteluaika Karelia Ulkorakennus Oy:ltä. Käymme läpi pihasuunnitelmasi ja annamme tarjouksen – ilman sitoumuksia.">
+  <meta name="description" content="Varaa ilmainen suunnitteluaika Karelia Ulkorakennus Oy:ltä.">
   <link rel="stylesheet" href="style.css">
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-  <style>
-    .calendly-wrap {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      min-height: 700px;
-    }
-    .calendly-inline-widget {
-      min-width: 320px;
-      height: 700px;
-    }
-    .info-boxes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -45,8 +26,9 @@
               <a href="piharemontit.html">Piharemontit</a>
             </div>
           </li>
-          <li><a href="faq.html">UKK</a></li><li><a href="yritys.html">Meistä</a></li>
-          <li><a href="yhteydenotto.html" class="active">Yhteydenotto</a></li>
+          <li><a href="faq.html">UKK</a></li>
+          <li><a href="yritys.html">Meistä</a></li>
+          <li><a href="yhteydenotto.html">Yhteydenotto</a></li>
         </ul>
       </nav>
       <div class="hamburger" id="hbg" onclick="toggleMenu()">
@@ -65,53 +47,172 @@
       </div>
       <a href="faq.html">UKK</a>
       <a href="yritys.html">Meistä</a>
-      <a href="yhteydenotto.html" class="active">Yhteydenotto</a>
+      <a href="yhteydenotto.html">Yhteydenotto</a>
     </div>
   </header>
 
   <main>
+    <section class="booking-section">
+      <div class="booking-shell">
 
-    <section class="hero" style="padding:2.5rem 1.5rem">
-      <div class="container">
-        <h1>Varaa suunnitteluaika</h1>
-        <p>Ilmainen ja sitoutumaton suunnitteluhetki – käymme läpi tarpeesi ja annamme arvion.</p>
-      </div>
-    </section>
+        <h1 class="booking-title">Varaa suunnitteluaika</h1>
+        <p class="booking-subtitle">Ilmainen ja sitoutumaton – noin 30 minuuttia, puhelimitse tai paikan päällä.</p>
 
-    <section>
-      <div class="container">
-
-        <!-- Info boxes -->
-        <div class="info-boxes">
-          <div class="info-block">
-            <h3>Kesto</h3>
-            <p>Noin 30 minuuttia – sopii hyvin kiireisellekin.</p>
+        <!-- Progress indicator -->
+        <div class="progress-track">
+          <div class="progress-step active" data-step="1">
+            <div class="step-circle">1</div>
+            <div class="step-label">Päivä</div>
           </div>
-          <div class="info-block">
-            <h3>Hinta</h3>
-            <p>Täysin ilmainen ja sitoutumaton. Ei piilokuluja.</p>
+          <div class="progress-step" data-step="2">
+            <div class="step-circle">2</div>
+            <div class="step-label">Aika</div>
           </div>
-          <div class="info-block">
-            <h3>Paikka</h3>
-            <p>Puhelimitse tai paikan päällä – sovitaan yhdessä.</p>
+          <div class="progress-step" data-step="3">
+            <div class="step-circle">3</div>
+            <div class="step-label">Tiedot</div>
           </div>
-          <div class="info-block">
-            <h3>Vahvistus</h3>
-            <p>Saat vahvistuksen sähköpostitse heti varauksen jälkeen.</p>
+          <div class="progress-step" data-step="4">
+            <div class="step-circle">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor"
+                   stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="2,7 6,11 12,3"/>
+              </svg>
+            </div>
+            <div class="step-label">Valmis</div>
           </div>
         </div>
 
-        <!-- Calendly embed -->
-        <div class="calendly-wrap">
-          <div
-            class="calendly-inline-widget"
-            data-url="https://calendly.com/kskrausova/30min?hide_gdpr_banner=1&primary_color=c97d4e"
-          ></div>
-        </div>
+        <div class="wizard-card">
 
+          <!-- ═══ STEP 1: Calendar ═══ -->
+          <div class="step-panel active" id="step1">
+            <div class="panel-header">
+              <h2>Valitse päivä</h2>
+              <p>Valitse sinulle sopiva arkipäivä. Viikonloput eivät ole käytettävissä.</p>
+            </div>
+            <div class="panel-body">
+              <div class="cal-nav">
+                <button class="cal-arrow" id="calPrev" onclick="changeMonth(-1)" aria-label="Edellinen kuukausi">&#8592;</button>
+                <div class="cal-month" id="calMonth"></div>
+                <button class="cal-arrow" onclick="changeMonth(1)" aria-label="Seuraava kuukausi">&#8594;</button>
+              </div>
+              <div class="cal-grid" id="calGrid"></div>
+            </div>
+            <div class="panel-footer">
+              <span></span>
+              <button class="btn-next" id="btnStep1" onclick="goTo(2)" disabled>Jatka &#8594;</button>
+            </div>
+          </div>
+
+          <!-- ═══ STEP 2: Time slots ═══ -->
+          <div class="step-panel" id="step2">
+            <div class="panel-header">
+              <h2>Valitse aika</h2>
+              <p>Tapaaminen kestää noin 30 minuuttia. Punaisella merkityt ajat ovat jo varattuja.</p>
+            </div>
+            <div class="panel-body">
+              <div class="chosen-date-banner">
+                <span>📅</span>
+                <span>Valittu päivä: <strong id="chosenDateText">–</strong></span>
+              </div>
+              <div id="slotsArea">
+                <div class="slots-loading">
+                  <span class="dot-spin"></span> Ladataan vapaita aikoja...
+                </div>
+              </div>
+              <div class="slots-legend" id="slotsLegend" style="display:none">
+                <span><span class="legend-dot" style="background:var(--clay)"></span>Vapaa</span>
+                <span><span class="legend-dot" style="background:var(--bk-red-bg);border:1.5px solid var(--bk-red-bdr)"></span>Varattu</span>
+                <span><span class="legend-dot" style="background:var(--clay);outline:2px solid var(--bark);outline-offset:2px"></span>Valittu</span>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <button class="btn-prev" onclick="goTo(1, true)">&#8592; Takaisin</button>
+              <button class="btn-next" id="btnStep2" onclick="goTo(3)" disabled>Jatka &#8594;</button>
+            </div>
+          </div>
+
+          <!-- ═══ STEP 3: Contact details ═══ -->
+          <div class="step-panel" id="step3">
+            <div class="panel-header">
+              <h2>Yhteystietosi</h2>
+              <p>Saat välittömästi sähköpostivahvistuksen vahvistetusta ajasta.</p>
+            </div>
+            <div class="panel-body">
+
+              <div class="booking-summary-pill">
+                📅 <span id="pillText">–</span>
+              </div>
+
+              <div class="error-flash" id="errorFlash">
+                ⚠ Tarkista punaisella merkityt kentät.
+              </div>
+
+              <form id="varausForm" action="varaus.php" method="POST" novalidate>
+                <input type="hidden" name="toivottu_pvm"  id="hiddenPvm">
+                <input type="hidden" name="toivottu_aika" id="hiddenAika">
+                <!-- Honeypot -->
+                <div style="display:none" aria-hidden="true">
+                  <input type="text" name="website" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div class="fgroup">
+                  <label for="etunimi">Nimi <span class="req">*</span></label>
+                  <input type="text" id="etunimi" name="etunimi"
+                         placeholder="Etunimi Sukunimi" maxlength="80" required autocomplete="name">
+                </div>
+
+                <div class="fgroup">
+                  <label for="puhelin">Puhelinnumero</label>
+                  <input type="tel" id="puhelin" name="puhelin"
+                         placeholder="050 000 0000" maxlength="30" autocomplete="tel">
+                </div>
+
+                <div class="fgroup">
+                  <label for="email">Sähköposti <span class="req">*</span></label>
+                  <input type="email" id="email" name="email"
+                         placeholder="nimi@esimerkki.fi" maxlength="120" required autocomplete="email">
+                </div>
+              </form>
+
+            </div>
+            <div class="panel-footer">
+              <button class="btn-prev" onclick="goTo(2, true)">&#8592; Takaisin</button>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.3rem">
+                <button class="btn-submit-final" id="btnSubmit" onclick="submitForm()">
+                  <span id="btnSubmitText">Lähetä varaus</span>
+                  <div class="bk-spinner" id="submitSpinner"></div>
+                  <span id="btnArrow">&#8594;</span>
+                </button>
+                <p class="form-notice">Käsittelemme tietosi tietosuojaselosteemme mukaisesti.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ STEP 4: Success ═══ -->
+          <div class="step-panel" id="step4">
+            <div class="success-screen">
+              <div class="success-icon">
+                <svg viewBox="0 0 24 24"><polyline points="4,12 9,17 20,6"/></svg>
+              </div>
+              <h2>Aika vahvistettu!</h2>
+              <p>
+                Suunnitteluaikasi on vahvistettu. Vahvistus on lähetetty sähköpostiisi –
+                tarkista myös roskapostikansio.
+              </p>
+              <div class="success-summary">
+                <div class="ss-row"><span>Päivä</span><strong id="ss-pvm">–</strong></div>
+                <div class="ss-row"><span>Aika</span><strong id="ss-aika">–</strong></div>
+                <div class="ss-row"><span>Kesto</span><strong>~30 min</strong></div>
+              </div>
+              <a href="index.html" class="btn-back-home">← Takaisin etusivulle</a>
+            </div>
+          </div>
+
+        </div><!-- /wizard-card -->
       </div>
     </section>
-
   </main>
 
   <footer>
@@ -126,13 +227,292 @@
     <div class="footer-privacy"><a href="tietosuoja.html">Tietosuojaseloste</a></div>
   </footer>
 
-  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
-  <script src="chatbot.js"></script>
   <script>
+    /* ════════════════════════════════
+       STATE
+    ════════════════════════════════ */
+    const state = {
+      currentStep:  1,
+      selectedDate: null,
+      selectedTime: null,
+      bookedSlots:  [],
+    };
+
+    const TIME_SLOTS = [
+      '09:00–09:30','10:00–10:30','11:00–11:30','12:00–12:30',
+      '13:00–13:30','14:00–14:30','15:00–15:30','16:00–16:30',
+    ];
+
+    const FI_MONTHS   = ['Tammikuu','Helmikuu','Maaliskuu','Huhtikuu','Toukokuu','Kesäkuu',
+                         'Heinäkuu','Elokuu','Syyskuu','Lokakuu','Marraskuu','Joulukuu'];
+    const FI_WEEKDAYS = ['Ma','Ti','Ke','To','Pe','La','Su'];
+
+    /* ════════════════════════════════
+       CALENDAR
+    ════════════════════════════════ */
+    let calViewYear, calViewMonth;
+
+    function initCalendar() {
+      const now = new Date();
+      calViewYear  = now.getFullYear();
+      calViewMonth = now.getMonth();
+      renderCalendar();
+    }
+
+    function changeMonth(dir) {
+      calViewMonth += dir;
+      if (calViewMonth > 11) { calViewMonth = 0;  calViewYear++; }
+      if (calViewMonth < 0)  { calViewMonth = 11; calViewYear--; }
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const today = new Date(); today.setHours(0,0,0,0);
+      document.getElementById('calMonth').textContent = FI_MONTHS[calViewMonth] + ' ' + calViewYear;
+
+      const isCurrentMonth = calViewYear === today.getFullYear() && calViewMonth === today.getMonth();
+      document.getElementById('calPrev').disabled = isCurrentMonth;
+
+      const grid = document.getElementById('calGrid');
+      grid.innerHTML = '';
+
+      FI_WEEKDAYS.forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'cal-weekday';
+        el.textContent = d;
+        grid.appendChild(el);
+      });
+
+      const firstDow = new Date(calViewYear, calViewMonth, 1).getDay();
+      const offset   = firstDow === 0 ? 6 : firstDow - 1;
+      for (let i = 0; i < offset; i++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day empty';
+        grid.appendChild(el);
+      }
+
+      const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(calViewYear, calViewMonth, d);
+        const dow  = date.getDay();
+        const isPast     = date < today;
+        const isWeekend  = dow === 0 || dow === 6;
+        const isToday    = date.getTime() === today.getTime();
+        const isSelected = state.selectedDate && state.selectedDate.getTime() === date.getTime();
+
+        const el = document.createElement('button');
+        el.type = 'button';
+        el.textContent = d;
+
+        let cls = 'cal-day';
+        if (isToday)    cls += ' today';
+        if (isSelected) cls += ' selected';
+        if (isPast || isWeekend) {
+          cls += isPast ? ' disabled' : ' weekend';
+          el.disabled = true;
+        } else {
+          el.addEventListener('click', () => selectDay(date));
+        }
+        el.className = cls;
+        grid.appendChild(el);
+      }
+    }
+
+    function selectDay(date) {
+      state.selectedDate = date;
+      state.selectedTime = null;
+      renderCalendar();
+      document.getElementById('btnStep1').disabled = false;
+    }
+
+    /* ════════════════════════════════
+       TIME SLOTS
+    ════════════════════════════════ */
+    function loadSlots(dateISO) {
+      const area   = document.getElementById('slotsArea');
+      const legend = document.getElementById('slotsLegend');
+
+      area.innerHTML = '<div class="slots-loading"><span class="dot-spin"></span> Ladataan vapaita aikoja...</div>';
+      legend.style.display = 'none';
+      document.getElementById('btnStep2').disabled = true;
+      state.selectedTime = null;
+      state.bookedSlots  = [];
+
+      fetch('slots.php?date=' + dateISO)
+        .then(r => r.json())
+        .then(data => {
+          state.bookedSlots = data.booked || [];
+          renderTimeSlots();
+          legend.style.display = 'flex';
+        })
+        .catch(() => {
+          state.bookedSlots = [];
+          renderTimeSlots();
+          legend.style.display = 'flex';
+        });
+    }
+
+    function renderTimeSlots() {
+      const area = document.getElementById('slotsArea');
+      const grid = document.createElement('div');
+      grid.className = 'time-grid';
+
+      TIME_SLOTS.forEach(slot => {
+        const isBooked   = state.bookedSlots.includes(slot);
+        const isSelected = state.selectedTime === slot;
+        const startTime  = slot.split('–')[0];
+
+        const el = document.createElement('div');
+        el.className = 'time-slot' + (isBooked ? ' booked' : '') + (isSelected ? ' selected' : '');
+
+        if (isBooked) {
+          el.innerHTML = `<span class="ts-time">${startTime}</span><span class="ts-label">Varattu</span>`;
+          el.title = 'Tämä aika on jo varattu';
+        } else {
+          el.innerHTML = `<span class="ts-time">${startTime}</span><span class="ts-dur">30 min</span>`;
+          el.addEventListener('click', () => selectTime(slot));
+        }
+        grid.appendChild(el);
+      });
+
+      area.innerHTML = '';
+      area.appendChild(grid);
+    }
+
+    function selectTime(slot) {
+      state.selectedTime = slot;
+      renderTimeSlots();
+      document.getElementById('btnStep2').disabled = false;
+    }
+
+    /* ════════════════════════════════
+       STEP NAVIGATION
+    ════════════════════════════════ */
+    function goTo(step, goingBack = false) {
+      const current = document.getElementById('step' + state.currentStep);
+      const next    = document.getElementById('step' + step);
+      if (!current || !next) return;
+
+      updateProgress(step);
+      current.classList.remove('active');
+      next.classList.toggle('going-back', goingBack);
+      next.classList.add('active');
+      state.currentStep = step;
+
+      if (step === 2) {
+        document.getElementById('chosenDateText').textContent = formatDateFi(state.selectedDate);
+        loadSlots(formatDateISO(state.selectedDate));
+      }
+
+      if (step === 3) {
+        document.getElementById('pillText').textContent =
+          formatDateFi(state.selectedDate) + '  ·  ' + state.selectedTime;
+        document.getElementById('hiddenPvm').value  = formatDateISO(state.selectedDate);
+        document.getElementById('hiddenAika').value = state.selectedTime;
+      }
+
+      document.querySelector('.wizard-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function updateProgress(activeStep) {
+      document.querySelectorAll('.progress-step').forEach(el => {
+        const s = parseInt(el.dataset.step);
+        el.classList.toggle('active', s === activeStep);
+        el.classList.toggle('done',   s < activeStep);
+      });
+    }
+
+    /* ════════════════════════════════
+       FORM SUBMIT
+    ════════════════════════════════ */
+    function submitForm() {
+      // Split "Etunimi Sukunimi" into two hidden fields for PHP
+      const nameVal   = document.getElementById('etunimi').value.trim();
+      const nameParts = nameVal.split(/\s+/);
+
+      let sukunimiInput = document.getElementById('sukunimi');
+      if (!sukunimiInput) {
+        sukunimiInput = document.createElement('input');
+        sukunimiInput.type = 'hidden';
+        sukunimiInput.name = 'sukunimi';
+        sukunimiInput.id   = 'sukunimi';
+        document.getElementById('varausForm').appendChild(sukunimiInput);
+      }
+
+      document.getElementById('etunimi').value = nameParts[0] || nameVal;
+      sukunimiInput.value = nameParts.slice(1).join(' ') || nameParts[0] || nameVal;
+
+      // Validate
+      let valid = true;
+      document.querySelectorAll('.fgroup input').forEach(el => el.classList.remove('invalid'));
+      document.getElementById('errorFlash').style.display = 'none';
+
+      ['etunimi','email'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el || !el.value.trim()) { el && el.classList.add('invalid'); valid = false; }
+      });
+
+      const emailEl = document.getElementById('email');
+      if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+        emailEl.classList.add('invalid'); valid = false;
+      }
+
+      if (!valid) {
+        document.getElementById('errorFlash').style.display = 'block';
+        return;
+      }
+
+      // Show spinner
+      const btn = document.getElementById('btnSubmit');
+      btn.disabled = true;
+      document.getElementById('btnSubmitText').textContent = 'Lähetetään...';
+      document.getElementById('submitSpinner').style.display = 'block';
+      document.getElementById('btnArrow').style.display = 'none';
+
+      fetch('varaus.php', { method: 'POST', body: new FormData(document.getElementById('varausForm')) })
+        .then(res => {
+          if ((res.url || '').includes('status=error') || (res.url || '').includes('status=invalid')) {
+            throw new Error('server_error');
+          }
+        })
+        .then(() => {
+          document.getElementById('ss-pvm').textContent  = formatDateFi(state.selectedDate);
+          document.getElementById('ss-aika').textContent = state.selectedTime;
+          goTo(4);
+        })
+        .catch(() => {
+          btn.disabled = false;
+          document.getElementById('btnSubmitText').textContent = 'Lähetä varaus';
+          document.getElementById('submitSpinner').style.display = 'none';
+          document.getElementById('btnArrow').style.display = 'inline';
+          const flash = document.getElementById('errorFlash');
+          flash.textContent = '⚠ Varauksessa tapahtui virhe. Yritä uudelleen tai ota yhteyttä sähköpostitse.';
+          flash.style.display = 'block';
+        });
+    }
+
+    /* ════════════════════════════════
+       HELPERS
+    ════════════════════════════════ */
+    function formatDateFi(date) {
+      if (!date) return '–';
+      const days = ['sunnuntai','maanantai','tiistai','keskiviikko','torstai','perjantai','lauantai'];
+      return days[date.getDay()] + ' ' + date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear();
+    }
+
+    function formatDateISO(date) {
+      if (!date) return '';
+      return date.getFullYear() + '-' +
+             String(date.getMonth()+1).padStart(2,'0') + '-' +
+             String(date.getDate()).padStart(2,'0');
+    }
+
     function toggleMenu() {
       document.getElementById('hbg').classList.toggle('open');
       document.getElementById('mobile-nav').classList.toggle('open');
     }
+
+    document.addEventListener('DOMContentLoaded', initCalendar);
   </script>
 
 </body>
