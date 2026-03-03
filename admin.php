@@ -14,7 +14,98 @@ define('DB_USER',    'karelia-user');
 define('DB_PASS',    'iq3A5oHZX8w9izVw7jH2');
 define('DB_CHARSET', 'utf8mb4');
 
-session_start();
+// ── Sähköpostiasetukset ──────────────────────────────────────
+define('BREVO_API_KEY', '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');
+define('SENDER_EMAIL',  'kskrausova@gmail.com');
+define('SENDER_NAME',   'Karelia Ulkorakennus Oy');
+
+function lahetaPeruutusViesti(string $email, string $nimi, string $pvm, string $aika): void {
+    $pvm_fi = date('d.m.Y', strtotime($pvm));
+    $html = <<<HTML
+<!DOCTYPE html><html lang="fi"><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#faf7f4;font-family:system-ui,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#faf7f4;padding:40px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+        <tr>
+          <td style="background:#2c1f14;border-radius:10px 10px 0 0;padding:28px 36px;">
+            <p style="margin:0;font-size:20px;font-weight:700;color:#fff;">
+              Karelia <span style="color:#c97d4e;">Ulkorakennus</span> Oy
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#fff;padding:36px;border-left:1px solid #e0d5c8;border-right:1px solid #e0d5c8;">
+            <h1 style="margin:0 0 12px;font-size:20px;color:#2c1f14;">Suunnitteluaika peruttu</h1>
+            <p style="margin:0 0 20px;color:#5a4030;font-size:15px;">
+              Hei {$nimi}, valitettavasti joudumme perumaan sovitun suunnitteluaikasi:
+            </p>
+            <table cellpadding="0" cellspacing="0"
+                   style="background:#faf7f4;border:1px solid #e0d5c8;border-radius:8px;
+                          margin-bottom:24px;width:100%;">
+              <tr><td style="padding:20px 24px;">
+                <table cellpadding="0" cellspacing="0" style="font-size:14px;color:#2c1f14;width:100%;">
+                  <tr>
+                    <td style="padding:5px 0;color:#8a7060;width:130px;">Päivämäärä</td>
+                    <td style="padding:5px 0;font-weight:600;">{$pvm_fi}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:5px 0;color:#8a7060;">Aika</td>
+                    <td style="padding:5px 0;font-weight:600;">{$aika}</td>
+                  </tr>
+                </table>
+              </td></tr>
+            </table>
+            <p style="margin:0 0 12px;color:#5a4030;font-size:14px;">
+              Olemme pahoillamme aiheutuneesta haitasta. Otamme sinuun yhteyttä
+              mahdollisimman pian sopiaksemme uuden ajan.
+            </p>
+            <p style="margin:0;color:#5a4030;font-size:14px;">
+              Voit myös olla suoraan yhteydessä meihin:<br>
+              <a href="mailto:info@kareliarakennus.fi" style="color:#c97d4e;">info@kareliarakennus.fi</a>
+              · <a href="tel:+358501234567" style="color:#c97d4e;">050 123 4567</a>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f5ede3;border:1px solid #e0d5c8;border-top:none;
+                      border-radius:0 0 10px 10px;padding:16px 36px;text-align:center;">
+            <p style="margin:0;font-size:12px;color:#8a7060;">
+              Karelia Ulkorakennus Oy · Joensuu, Pohjois-Karjala<br>
+              Tämä on automaattinen viesti – älä vastaa tähän sähköpostiin.
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>
+HTML;
+
+    $data = [
+        'sender' => ['email' => SENDER_EMAIL, 'name' => SENDER_NAME],
+        'to'     => [['email' => $email, 'name' => $nimi]],
+        'subject'     => 'Suunnitteluaikasi on peruttu – Karelia Ulkorakennus Oy',
+        'htmlContent' => $html,
+    ];
+
+    $ch = curl_init('https://api.brevo.com/v3/smtp/email');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => json_encode($data),
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'api-key: ' . BREVO_API_KEY,
+        ],
+        CURLOPT_TIMEOUT => 10,
+    ]);
+    curl_exec($ch);
+    curl_close($ch);
+}
+
+
 
 // ── Kirjautuminen / uloskirjautuminen ────────────────────────
 if (isset($_GET['logout'])) {
@@ -40,7 +131,7 @@ $update_msg = '';
 if ($logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_id'])) {
     $update_id   = (int) $_POST['update_id'];
     $update_tila = $_POST['update_tila'] ?? '';
-    $sallitut    = ['uusi', 'vahvistettu', 'peruttu'];
+    $sallitut    = ['vahvistettu', 'peruttu'];
 
     if (in_array($update_tila, $sallitut, true) && $update_id > 0) {
         try {
@@ -49,9 +140,29 @@ if ($logged_in && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_
                 DB_USER, DB_PASS,
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
-            $s = $pdo2->prepare('UPDATE varaukset SET tila = :tila WHERE id = :id');
-            $s->execute([':tila' => $update_tila, ':id' => $update_id]);
-            $update_msg = 'Tila päivitetty.';
+            // Fetch booking details before updating
+            $fetch = $pdo2->prepare('SELECT * FROM varaukset WHERE id = :id');
+            $fetch->execute([':id' => $update_id]);
+            $varaus = $fetch->fetch(PDO::FETCH_ASSOC);
+
+            if ($varaus && $varaus['tila'] !== 'peruttu') {
+                $s = $pdo2->prepare('UPDATE varaukset SET tila = :tila WHERE id = :id');
+                $s->execute([':tila' => $update_tila, ':id' => $update_id]);
+
+                // Send cancellation email if cancelling
+                if ($update_tila === 'peruttu') {
+                    $nimi = trim($varaus['etunimi'] . ' ' . $varaus['sukunimi']);
+                    lahetaPeruutusViesti(
+                        $varaus['email'],
+                        $nimi,
+                        $varaus['toivottu_pvm'],
+                        $varaus['toivottu_aika']
+                    );
+                    $update_msg = 'Varaus peruttu ja peruutusilmoitus lähetetty asiakkaalle.';
+                } else {
+                    $update_msg = 'Tila päivitetty.';
+                }
+            }
         } catch (PDOException $e) {
             $update_msg = 'Virhe: ' . htmlspecialchars($e->getMessage());
         }
@@ -95,9 +206,8 @@ if ($logged_in) {
 // ── Tilavärien apufunktio ────────────────────────────────────
 function tilaBadge(string $tila): string {
     return match($tila) {
-        'vahvistettu' => '<span class="badge badge-green">Vahvistettu</span>',
-        'peruttu'     => '<span class="badge badge-red">Peruttu</span>',
-        default       => '<span class="badge badge-orange">Uusi</span>',
+        'peruttu' => '<span class="badge badge-red">Peruttu</span>',
+        default   => '<span class="badge badge-green">Vahvistettu</span>',
     };
 }
 ?>
@@ -245,18 +355,19 @@ function tilaBadge(string $tila): string {
     .badge-red    { background: var(--red-bg);    color: var(--red); }
     .badge-orange { background: var(--orange-bg); color: var(--orange); }
 
-    /* ── Status form inside table ── */
-    .tila-form { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; }
-    .tila-form select {
-      padding: .3rem .5rem; border: 1px solid var(--border);
-      border-radius: 5px; font-size: .8rem; cursor: pointer;
+    /* ── Cancel button ── */
+    .btn-cancel {
+      padding: .3rem .8rem;
+      background: var(--red-bg);
+      color: var(--red);
+      border: 1.5px solid #e8b0b0;
+      border-radius: 5px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
     }
-    .tila-form button {
-      padding: .3rem .75rem; background: var(--accent); color: #fff;
-      border: none; border-radius: 5px; font-size: .8rem;
-      font-weight: 600; cursor: pointer;
-    }
-    .tila-form button:hover { background: var(--accent2); }
+    .btn-cancel:hover { background: #f9dada; }
 
     /* ── Empty state ── */
     .empty {
@@ -321,18 +432,13 @@ function tilaBadge(string $tila): string {
   <?php else: ?>
 
     <?php
-      // Laske tilastot kaikista varauksista
-      $kaikki_maara       = 0;
-      $uusi_maara         = 0;
-      $vahvistettu_maara  = 0;
-      $peruttu_maara      = 0;
+      $kaikki_maara      = 0;
+      $vahvistettu_maara = 0;
+      $peruttu_maara     = 0;
       try {
-          $statsStmt = $pdo->query("
-              SELECT tila, COUNT(*) AS maara FROM varaukset GROUP BY tila
-          ");
+          $statsStmt = $pdo->query("SELECT tila, COUNT(*) AS maara FROM varaukset GROUP BY tila");
           foreach ($statsStmt->fetchAll() as $row) {
               $kaikki_maara += $row['maara'];
-              if ($row['tila'] === 'uusi')        $uusi_maara        = $row['maara'];
               if ($row['tila'] === 'vahvistettu') $vahvistettu_maara = $row['maara'];
               if ($row['tila'] === 'peruttu')     $peruttu_maara     = $row['maara'];
           }
@@ -342,15 +448,13 @@ function tilaBadge(string $tila): string {
     <!-- Tilastokortit -->
     <div class="stats">
       <div class="stat-card"><div class="num"><?= $kaikki_maara ?></div><div class="lbl">Varauksia yhteensä</div></div>
-      <div class="stat-card"><div class="num" style="color:var(--orange)"><?= $uusi_maara ?></div><div class="lbl">Uusia</div></div>
       <div class="stat-card"><div class="num" style="color:var(--green)"><?= $vahvistettu_maara ?></div><div class="lbl">Vahvistettuja</div></div>
       <div class="stat-card"><div class="num" style="color:var(--red)"><?= $peruttu_maara ?></div><div class="lbl">Peruutettuja</div></div>
     </div>
 
     <!-- Suodattimet -->
     <div class="filters">
-      <a href="admin.php?tila=kaikki" class="filter-btn <?= $filter_tila === 'kaikki'      ? 'active' : '' ?>">Kaikki</a>
-      <a href="admin.php?tila=uusi"   class="filter-btn <?= $filter_tila === 'uusi'        ? 'active' : '' ?>">Uudet</a>
+      <a href="admin.php?tila=kaikki"      class="filter-btn <?= $filter_tila === 'kaikki'      ? 'active' : '' ?>">Kaikki</a>
       <a href="admin.php?tila=vahvistettu" class="filter-btn <?= $filter_tila === 'vahvistettu' ? 'active' : '' ?>">Vahvistetut</a>
       <a href="admin.php?tila=peruttu"     class="filter-btn <?= $filter_tila === 'peruttu'     ? 'active' : '' ?>">Peruutetut</a>
     </div>
@@ -388,15 +492,14 @@ function tilaBadge(string $tila): string {
               </td>
               <td>
                 <?= tilaBadge($v['tila']) ?>
-                <form method="POST" class="tila-form" style="margin-top:.4rem">
-                  <input type="hidden" name="update_id" value="<?= $v['id'] ?>">
-                  <select name="update_tila">
-                    <option value="uusi"        <?= $v['tila'] === 'uusi'        ? 'selected' : '' ?>>Uusi</option>
-                    <option value="vahvistettu" <?= $v['tila'] === 'vahvistettu' ? 'selected' : '' ?>>Vahvistettu</option>
-                    <option value="peruttu"     <?= $v['tila'] === 'peruttu'     ? 'selected' : '' ?>>Peruttu</option>
-                  </select>
-                  <button type="submit">Tallenna</button>
+                <?php if ($v['tila'] !== 'peruttu'): ?>
+                <form method="POST" style="margin-top:.5rem"
+                      onsubmit="return confirm('Perutaanko varaus ja lähetetäänkö peruutusilmoitus asiakkaalle?')">
+                  <input type="hidden" name="update_id"   value="<?= $v['id'] ?>">
+                  <input type="hidden" name="update_tila" value="peruttu">
+                  <button type="submit" class="btn-cancel">Peruuta varaus</button>
                 </form>
+                <?php endif; ?>
               </td>
               <td style="white-space:nowrap;color:var(--muted);font-size:.8rem">
                 <?= htmlspecialchars(date('d.m.Y H:i', strtotime($v['luotu_klo']))) ?>
