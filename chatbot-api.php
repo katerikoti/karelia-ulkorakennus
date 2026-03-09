@@ -5,9 +5,7 @@
  * API key never exposed to browser.
  */
 
-// ── PASTE YOUR GROQ KEY HERE ──────────────────────────────────────────────────
-define('GROQ_API_KEY', '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');
-// ─────────────────────────────────────────────────────────────────────────────
+require_once __DIR__ . '/config.php';
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -86,7 +84,7 @@ $messages = array_merge(
 );
 
 $data = json_encode([
-    'model'       => 'llama-3.1-8b-instant',
+    'model'       => 'llama-3.3-70b-versatile',
     'messages'    => $messages,
     'max_tokens'  => 120,
     'temperature' => 0.4,
