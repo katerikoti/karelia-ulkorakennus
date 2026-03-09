@@ -211,11 +211,14 @@ if ($logged_in) {
 }
 
 // ── Tilavärien apufunktio ────────────────────────────────────
-function tilaBadge(string $tila): string {
-    return match($tila) {
-        'peruttu' => '<span class="badge badge-red">Peruttu</span>',
-        default   => '<span class="badge badge-green">Vahvistettu</span>',
-    };
+function tilaBadge(string $tila, bool $past = false): string {
+    if ($tila === 'peruttu') {
+        return '<span class="badge badge-red">Peruttu</span>';
+    }
+    if ($past) {
+        return '<span class="badge badge-blue">Pidetty</span>';
+    }
+    return '<span class="badge badge-green">Vahvistettu</span>';
 }
 ?>
 <!DOCTYPE html>
@@ -361,6 +364,7 @@ function tilaBadge(string $tila): string {
     .badge-green  { background: var(--green-bg);  color: var(--green); }
     .badge-red    { background: var(--red-bg);    color: var(--red); }
     .badge-orange { background: var(--orange-bg); color: var(--orange); }
+    .badge-blue   { background: #e8f0fe; color: #1a56a0; }
 
     /* ── Cancel button ── */
     .btn-cancel {
@@ -485,7 +489,7 @@ function tilaBadge(string $tila): string {
 
     <?php
     // Reusable table renderer
-    function renderVarauksetTable(array $rows, string $emptyMsg): void { ?>
+    function renderVarauksetTable(array $rows, string $emptyMsg, bool $past = false): void { ?>
     <div class="table-wrap">
       <?php if (empty($rows)): ?>
         <div class="empty"><?= htmlspecialchars($emptyMsg) ?></div>
@@ -517,8 +521,8 @@ function tilaBadge(string $tila): string {
                 <span style="color:var(--muted)"><?= htmlspecialchars($v['toivottu_aika']) ?></span>
               </td>
               <td>
-                <?= tilaBadge($v['tila']) ?>
-                <?php if ($v['tila'] !== 'peruttu'): ?>
+                <?= tilaBadge($v['tila'], $past) ?>
+                <?php if (!$past && $v['tila'] !== 'peruttu'): ?>
                 <form method="POST" style="margin-top:.5rem"
                       onsubmit="return confirm('Perutaanko varaus ja lähetetäänkö peruutusilmoitus asiakkaalle?')">
                   <input type="hidden" name="update_id"   value="<?= $v['id'] ?>">
@@ -552,7 +556,7 @@ function tilaBadge(string $tila): string {
       Menneet tapaamiset
       <span class="count"><?= count($menneet) ?></span>
     </div>
-    <?php renderVarauksetTable($menneet, 'Ei menneitä tapaamisia.'); ?>
+    <?php renderVarauksetTable($menneet, 'Ei menneitä tapaamisia.', true); ?>
 
   <?php endif; ?>
 </div>
