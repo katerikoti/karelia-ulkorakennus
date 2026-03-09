@@ -6,7 +6,7 @@
 // ============================================================
 
 // ── Asetukset ────────────────────────────────────────────────
-define('ADMIN_PASSWORD', 'kujoensuu26');   // ← VAIHDA tämä!
+define('ADMIN_PASSWORD', 'kujoensuu26');   
 
 define('DB_HOST',    'localhost');
 define('DB_NAME',    'karelia-db');
