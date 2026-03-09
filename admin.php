@@ -200,6 +200,11 @@ if ($logged_in) {
         }
         $varaukset = $stmt->fetchAll();
 
+        // Split into upcoming and past
+        $today   = date('Y-m-d');
+        $tulevat = array_values(array_filter($varaukset, fn($v) => $v['toivottu_pvm'] >= $today));
+        $menneet = array_reverse(array_values(array_filter($varaukset, fn($v) => $v['toivottu_pvm'] < $today)));
+
     } catch (PDOException $e) {
         $db_error = 'Tietokantavirhe: ' . htmlspecialchars($e->getMessage());
     }
@@ -371,6 +376,23 @@ function tilaBadge(string $tila): string {
     }
     .btn-cancel:hover { background: #f9dada; }
 
+    /* ── Section heading ── */
+    .section-heading {
+      font-size: 1rem; font-weight: 700; color: var(--text);
+      margin: 2rem 0 .75rem;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .section-heading .dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+    }
+    .section-heading.upcoming .dot { background: var(--green); }
+    .section-heading.past .dot { background: var(--muted); }
+    .section-heading .count {
+      font-size: .78rem; font-weight: 600; color: var(--muted);
+      background: #f0e8e0; border-radius: 20px;
+      padding: .1rem .55rem; margin-left: .2rem;
+    }
+
     /* ── Empty state ── */
     .empty {
       text-align: center; padding: 3rem 1rem;
@@ -461,10 +483,12 @@ function tilaBadge(string $tila): string {
       <a href="admin.php?tila=peruttu"     class="filter-btn <?= $filter_tila === 'peruttu'     ? 'active' : '' ?>">Peruutetut</a>
     </div>
 
-    <!-- Varaukset-taulukko -->
+    <?php
+    // Reusable table renderer
+    function renderVarauksetTable(array $rows, string $emptyMsg): void { ?>
     <div class="table-wrap">
-      <?php if (empty($varaukset)): ?>
-        <div class="empty">Ei varauksia tällä suodattimella.</div>
+      <?php if (empty($rows)): ?>
+        <div class="empty"><?= htmlspecialchars($emptyMsg) ?></div>
       <?php else: ?>
         <table>
           <thead>
@@ -478,7 +502,7 @@ function tilaBadge(string $tila): string {
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($varaukset as $v): ?>
+            <?php foreach ($rows as $v): ?>
             <tr>
               <td><?= $v['id'] ?></td>
               <td>
@@ -512,6 +536,23 @@ function tilaBadge(string $tila): string {
         </table>
       <?php endif; ?>
     </div>
+    <?php } ?>
+
+    <!-- Tulevat tapaamiset -->
+    <div class="section-heading upcoming">
+      <span class="dot"></span>
+      Tulevat tapaamiset
+      <span class="count"><?= count($tulevat) ?></span>
+    </div>
+    <?php renderVarauksetTable($tulevat, 'Ei tulevia tapaamisia.'); ?>
+
+    <!-- Menneet tapaamiset -->
+    <div class="section-heading past" style="margin-top:2.5rem">
+      <span class="dot"></span>
+      Menneet tapaamiset
+      <span class="count"><?= count($menneet) ?></span>
+    </div>
+    <?php renderVarauksetTable($menneet, 'Ei menneitä tapaamisia.'); ?>
 
   <?php endif; ?>
 </div>
